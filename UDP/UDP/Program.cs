@@ -52,19 +52,24 @@ namespace Server
                 Console.WriteLine("Port sent from: {0}", temp[1]);
                 Console.WriteLine("Content received: {0}", temp[2]);
 
+                string data = "";
                 //Send the response in a datagram
-                byte[] sendData = encode.GetBytes(DateTime.Now.ToString());
+                if ( temp[2] == "Give me Date")
+                {
+                    data = DateTime.Now.ToShortDateString();
+                }
+                else //the message is "Give me Time")
+                {
+                    data = DateTime.Now.ToShortTimeString();
+                }
+                //byte[] sendData = encode.GetBytes(DateTime.Now.ToString());
+                byte[] sendData = encode.GetBytes(data);
                 Console.WriteLine();
-                Console.WriteLine("Sending current Date Time to {0}...", temp[0]);
+                Console.WriteLine("Sending data to {0}...", temp[0]);
+                Console.WriteLine("Waiting for next command...");
+                Console.WriteLine();
 
                 //We use the IP and port sent by the user to send the datagram back
-                //UDP (User Datagram Protocol) header format:
-                // 0            15 16           31
-                // -------------------------------
-                // | source port  |  dest port   |
-                // -------------------------------
-                // | UDP length   |  checksum    |
-                // -------------------------------
                 // UDP (array of bytes), length (num bytes), hostname, port
                 server.Send(sendData, sendData.Length, temp[0], Int32.Parse(temp[1]));
             }

@@ -40,15 +40,36 @@ namespace Host
 
             while (continueLoop)
             {
+                string val;
+                string sendString;
                 ASCIIEncoding encode = new ASCIIEncoding();
 
+                //Ask for 1) Date or 2) Time
+                Console.Write("Retrieve date (1) or time (2): ");
+                val = Console.ReadLine();
+
+                //Create the datagram based on the input:
+                if (val == "1")
+                {
+                    //Format: Hostname@Port@UniqueMessage
+                    sendString = myhostname + "@" + myport.ToString() + "@Give me Date";
+                    Console.WriteLine();
+                    Console.WriteLine("Asking for Date...");
+                }
+                else //anything else
+                {
+                    //Format: Hostname@Port@UniqueMessage
+                    sendString = myhostname + "@" + myport.ToString() + "@Give me Time";
+                    Console.WriteLine();
+                    Console.WriteLine("Asking for Time...");
+                }
+             
                 //Create the datagram
                 //Format: Hostname@Port@UniqueMessage
-                string sendString = myhostname + "@" + myport.ToString() + "@Give me Date Time";
                 //Encode it into byte array
                 byte[] sendData = encode.GetBytes(sendString);
-                Console.WriteLine();
-                Console.WriteLine("Asking for Date Time...");
+                //Console.WriteLine();
+                //Console.WriteLine("Asking for Date Time...");
 
                 //send to datagram to server, specified by it's port number
                 client.Send(sendData, sendData.Length, myhostname, remote_port);
@@ -56,17 +77,28 @@ namespace Host
                 //receive datagram from back from server
                 byte[] recData = client.Receive(ref receivePoint);
                 Console.WriteLine("Packet Received!!");
-                Console.WriteLine("Date Time received: {0}", encode.GetString(recData));
+                Console.WriteLine("Data received: {0}", encode.GetString(recData));
+                Console.WriteLine();
 
-                //close connection
-                client.Close();
-                Console.WriteLine("Connection Closed!!");
+                string resp;
+                Console.Write("Do you want to continue? y or n: ");
+                resp = Console.ReadLine();
+                if (resp == "n")
+                {
+                    //close connection
+                    client.Close();
+                    Console.WriteLine("Connection Closed!!");
 
-                //end loop
-                continueLoop = false;
+                    //end loop
+                    continueLoop = false;
+                }
+                else
+                {
+                    // any other character, keep going
+                }
             }
 
-            // wait for key input to close console
+            // wait for key input to close console. Not the most elegant way to close, but who cares...just a demo
             Console.Read();
         }
 
