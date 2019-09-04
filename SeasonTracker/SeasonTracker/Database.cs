@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 
 
 namespace SeasonTracker
 {
     public class Database
     {
+        private static readonly Lazy<Database> lazy = new Lazy<Database>(() => new Database());
+        public static Database Instance { get { return lazy.Value; } }
+
         //Private properties, hidden from the outside world - Encapsulation.
         //Nobody should care how the database is connected or what these properties are.
         private string _databaseName;
@@ -34,10 +37,13 @@ namespace SeasonTracker
         };
 
         //Constructor - create by typing "ctor" (snippet) and then tab key
-        public Database(string DatabaseName, 
-            string TableName, 
-            string ServerName, 
-            string UserName, 
+        /// <summary>
+        /// Constructor for Database. 
+        /// </summary>
+        public Database(string DatabaseName,
+            string TableName,
+            string ServerName,
+            string UserName,
             string Password)
         {
             //Set the private properties
@@ -62,84 +68,48 @@ namespace SeasonTracker
                 CreateTable();
             }
         }
-        
+
+        public event EventHandler<DatabaseStatusRaisedEventArgs> StatusRaised;
+
+        public void GetStatus()
+        {
+            ReadStatus();
+        }
+
+        private void ReadStatus()
+        {
+            //_databaseStatus = "From Database Class";
+
+            DatabaseStatusRaisedEventArgs args = new DatabaseStatusRaisedEventArgs();
+            args.Status = _databaseStatus;
+            OnDatabaseStatusRaised(args);
+        }
+
+        ///// <summary>
+        ///// Returns connection string for the database
+        ///// </summary>
+        //public string ConnectionString { get; }
+
+        ///// <summary>
+        ///// Returns table name for the database
+        ///// </summary>
+        //public string TableName { get; }
+
+
         /// <summary>
         /// TODO: Create this function when I know how to do it programatically
         /// </summary>
         private void CreateDatabase()
         {
             //TODO: Need to figure out how to create a database programmatically.
-            //-> Currently just the database needs to be created in server explorer.
-            //     However, the table can be created programmatically as seen in this class. 
+            //-> currently needs to be done in server explorer
         }
 
         /// <summary>
-        /// Returns TRUE if Table is created, FALSE if Table is not created.
+        /// Opens the database connection and returns the state as TRUE if success, FALSE if fail.
         /// </summary>
         /// <returns></returns>
-        private bool VerifyTable()
-        {
-            _tableIsCreated = false;
-            OpenConnection();
-            if (_connectionOpen)
-            {
-                string _checkTableQuery = "SELECT count(*) as IsExists FROM dbo.sysobjects where id = object_id('[dbo].[" + _tableName + "]')";
-
-                SqlCommand _cmd = new SqlCommand(_checkTableQuery, _sqlConnection);
-                //int exists = (int)_cmd.ExecuteScalar();
-                if ((int)_cmd.ExecuteScalar() > 0)
-                {
-                    _tableIsCreated = true;
-                }
-            }
-            else
-            {
-                //TODO: raise issue with connection/unable to verify table
-            }
-            CloseConnection();
-            return _tableIsCreated;
-        }
-
-        /// <summary>
-        /// Creates the table in the database
-        /// </summary>
-        private void CreateTable()
-        {
-            //All of the text I got from using Visual Studio's built in "Add New Table" to 
-            //get a prototype. Type of "VARCHAR(MAX)" needs to be used instead of "Text", as "Text" is 
-            //being deprecated (http://sqlhints.com/2016/05/11/differences-between-sql-server-text-and-varcharmax-data-type/)
-            OpenConnection();
-            if (_connectionOpen)
-            {
-                try
-                {
-                    string _cmdCreateTable = "CREATE TABLE[dbo].[" + _tableName + "] " +
-                                "([" + DatabaseColumns[0] + "] INT IDENTITY(1,1) NOT NULL, " +
-                                "[" + DatabaseColumns[1] + "] VARCHAR(MAX) NULL, " +
-                                "[" + DatabaseColumns[2] + "] INT NULL, " +
-                                "[" + DatabaseColumns[3] + "] INT NULL, " +
-                                "[" + DatabaseColumns[4] + "] VARCHAR(MAX) NULL)";
-
-                    SqlCommand _cmd = new SqlCommand(_cmdCreateTable, _sqlConnection);
-                    _cmd.ExecuteNonQuery();
-                }
-                catch(Exception exc)
-                {
-                    //TODO: raise issue with unable to create table
-                }
-            }
-            else
-            {
-                //TODO: raise issue with connection
-            }
-            CloseConnection();
-        }
-
-        /// <summary>
-        /// Opens the database connection and sets the _connectionOpen state as TRUE if opened, FALSE if closed.
-        /// </summary>
-        /// <returns>None</returns>
-        private void OpenConnection()
+        private bool OpenConnection()
         {
             try
             {
@@ -147,7 +117,7 @@ namespace SeasonTracker
                 if (_sqlConnection.State == ConnectionState.Open)
                     _connectionOpen = true;
             }
-            catch (Exception exc)
+            catch(System.Exception ex)
             {
                 //TODO: define what to happen here. Bring the message to the main window? show dialog?
                 if (_sqlConnection.State == ConnectionState.Open)
@@ -156,12 +126,12 @@ namespace SeasonTracker
                 }
                 _connectionOpen = false;
             }
+            return _connectionOpen;
         }
-
+        
         /// <summary>
-        /// Closes the database connection and sets the _connectionOpen state as FALSE if closed, TRUE if opened.
+        /// Closes connection
         /// </summary>
-        /// <returns>None</returns>
         private void CloseConnection()
         {
             try
@@ -170,7 +140,7 @@ namespace SeasonTracker
                 if (_sqlConnection.State == ConnectionState.Closed)
                     _connectionOpen = false;
             }
-            catch (Exception exc)
+            catch (System.Exception ex)
             {
                 //TODO: define what to happen here. Bring it to the main window? show dialog?
                 if (_sqlConnection.State == ConnectionState.Open)
@@ -181,193 +151,205 @@ namespace SeasonTracker
             }
         }
 
-        private void ReadStatus()
-        {
-            try
-            {
-
-            }
-            catch (Exception exc)
-            {
-                //TODO: 
-            }
-        }
-
-
-
-        /*
-         * Database Operations
-         */
-
         /// <summary>
-        /// TODO:
+        /// Returns TRUE if Table is created, FALSE if Table is not created.
         /// </summary>
-        /// <param name="TBD"></param>
-        /// <returns>None</returns>
-        public void LoadDataGrid()
+        /// <returns></returns>
+        private bool VerifyTable()
         {
-            try
+            _tableIsCreated = false;
+            if (OpenConnection())
             {
+                string _checkTableQuery = "SELECT count(*) as IsExists FROM dbo.sysobjects where id = object_id('[dbo].[" + TableName + "]')";
 
-            }
-            catch (Exception exc)
-            {
-                //TODO: 
-            }
-        }
-
-        /// <summary>
-        /// TODO:
-        /// </summary>
-        /// <param name="ShowName"></param>
-        /// <param name="SeasonNumber"></param>
-        /// <param name="EpisodeCount"></param>
-        /// <param name="WatchList"></param>
-        /// <returns>None</returns>
-        public void AddRecord(string ShowName, int SeasonNumber, int EpisodeCount, string WatchList)
-        {
-            OpenConnection();
-            if (_connectionOpen)
-            {
-                try
+                SqlCommand _cmd = new SqlCommand(_checkTableQuery, _dbConnection);
+                //int exists = (int)_cmd.ExecuteScalar();
+                if ((int)_cmd.ExecuteScalar() > 0 )
                 {
-                    SqlCommand _cmd = new SqlCommand("INSERT INTO " + _tableName +
+                    _tableIsCreated = true;
+                }
+            }
+            else
+            {
+                //TODO: raise issue with connection/unable to create table
+            }
+            CloseConnection();
+            return _tableIsCreated;
+        }
+        
+        /// <summary>
+        /// Creates the table in the database
+        /// </summary>
+        private void CreateTable()
+        {
+            //All of the text I got from using Visual Studio's built in "Add New Table" to 
+            //get a prototype. Type of "VARCHAR(MAX)" needs to be used instead of "Text", as "Text" is 
+            //being deprecated (http://sqlhints.com/2016/05/11/differences-between-sql-server-text-and-varcharmax-data-type/)
+            if (OpenConnection())
+            {
+                _cmdCreateTable = "CREATE TABLE[dbo].[" + TableName + "] " +
+                                "([" + _idColumn + "] INT IDENTITY(1,1) NOT NULL, " +
+                                "[" + _showNameColumn + "] VARCHAR(MAX) NULL, " +
+                                "[" + _seasonNumColumn + "] INT NULL, " +
+                                "[" + _episodeCountColumn + "] INT NULL, " +
+                                "[" + _watchlistColumn + "] VARCHAR(MAX) NULL)";
+
+                SqlCommand _cmd = new SqlCommand(_cmdCreateTable, _dbConnection);
+                _cmd.ExecuteNonQuery();
+
+                //_databaseStatus = "Table Created";
+                //ReadStatus();
+                //UpdateStatus("Table Created!");
+            }
+            else
+            {
+                //TODO: raise issue with connection/unable to create table
+            }
+            CloseConnection();
+        }
+
+        /// <summary>
+        /// TODO: create this function whan I know how to do it programatically
+        /// </summary>
+        private void VerifyDatabase()
+        {
+            //TODO: Verify if database exits before creating
+        }
+
+        public DataSet LoadDataGrid()
+        {
+            DataSet ds = new DataSet();
+
+            if (OpenConnection())
+            {
+                string selectString = "SELECT * FROM " + TableName;
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(selectString, _sqlConnection);
+                dataAdapter.Fill(ds, TableName);
+            }
+            else
+            {
+                //TODO: raise issue with connection/unable to create table
+            }
+            CloseConnection();
+
+            return ds;
+        }
+
+        /// <summary>
+        /// TODO:
+        /// </summary>
+        /// <param name="showName"></param>
+        /// <param name="seasonNum"></param>
+        /// <param name="episodeCount"></param>
+        /// <param name="watchList"></param>
+        public void AddRecord(string showName, int seasonNum, int episodeCount, string watchList)
+        {
+            if (OpenConnection())
+            {
+                SqlCommand _cmd = new SqlCommand("INSERT INTO " + TableName +
                                                 "(" +
-                                                DatabaseColumns[1] + "," +
-                                                DatabaseColumns[2] + "," +
-                                                DatabaseColumns[3] + "," +
-                                                DatabaseColumns[4] +
-                                                ")" + " VALUES(" +
+                                                _showNameColumn + "," +
+                                                _seasonNumColumn + "," +
+                                                _episodeCountColumn + "," +
+                                                _watchlistColumn +
+                                                ")" + " VALUES(" + 
                                                 "@showName," +
                                                 "@seasonNum," +
                                                 "@episodeCount," +
                                                 "@watchList" +
                                                 ")", _sqlConnection);
 
-                    _cmd.Parameters.Add("@showName", SqlDbType.VarChar);
-                    _cmd.Parameters.Add("@seasonNum", SqlDbType.Int);
-                    _cmd.Parameters.Add("@episodeCount", SqlDbType.Int);
-                    _cmd.Parameters.Add("@watchList", SqlDbType.VarChar);
+                _cmd.Parameters.Add("@showName", SqlDbType.VarChar);
+                _cmd.Parameters.Add("@seasonNum", SqlDbType.Int);
+                _cmd.Parameters.Add("@episodeCount", SqlDbType.Int);
+                _cmd.Parameters.Add("@watchList", SqlDbType.VarChar);
 
-                    _cmd.Parameters["@showName"].Value = ShowName;
-                    _cmd.Parameters["@seasonNum"].Value = SeasonNumber;
-                    _cmd.Parameters["@episodeCount"].Value = EpisodeCount;
-                    _cmd.Parameters["@watchList"].Value = WatchList;
+                _cmd.Parameters["@showName"].Value = showName;
+                _cmd.Parameters["@seasonNum"].Value = seasonNum;
+                _cmd.Parameters["@episodeCount"].Value = episodeCount;
+                _cmd.Parameters["@watchList"].Value = watchList;
 
-                    _cmd.ExecuteNonQuery();
-                }
-                catch(Exception exc)
-                {
-                    //TODO: 
-                }
-                finally
-                {
-                    CloseConnection();
-                }
-                
-                //_databaseStatus = "Record Added";
-                //ReadStatus();
+                _cmd.ExecuteNonQuery();
+
+                _databaseStatus = "Record Added";
+                ReadStatus();
             }
             else
             {
-                //TODO: raise issue with connection
+                //TODO: raise issue with connection/unable to create table
             }
             CloseConnection();
         }
 
-        /// <summary>
-        /// TODO:
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="ShowName"></param>
-        /// <param name="SeasonNumber"></param>
-        /// <param name="EpisodeCount"></param>
-        /// <param name="WatchList"></param>
-        /// <returns>None</returns>
-        public void UpdateRecord(int Id, string ShowName, int SeasonNumber, int EpisodeCount, string WatchList)
+        public void UpdateRecord(int table_id, string showName, int seasonNum, int episodeCount, string watchList)
         {
-            OpenConnection();
-            if (_connectionOpen)
+            if (OpenConnection())
             {
-                try
-                {
-                    SqlCommand _cmd = new SqlCommand("UPDATE " + _tableName +
+                SqlCommand _cmd = new SqlCommand("UPDATE " + TableName +
                                                 " SET " +
-                                                DatabaseColumns[1] + "=@showName, " +
-                                                DatabaseColumns[2] + "=@seasonNum, " +
-                                                DatabaseColumns[3] + "=@episodeCount, " +
-                                                DatabaseColumns[4] + "=@watchList" +
+                                                _showNameColumn + "=@showName, " +
+                                                _seasonNumColumn + "=@seasonNum, " +
+                                                _episodeCountColumn + "=@episodeCount, " +
+                                                _watchlistColumn + "=@watchList" +
                                                 " WHERE " +
-                                                DatabaseColumns[0] + "=" + Id.ToString(),
+                                                _idColumn + "=" + table_id.ToString(),
                                                 _sqlConnection);
+             
+                _cmd.Parameters.Add("@showName", SqlDbType.VarChar);
+                _cmd.Parameters.Add("@seasonNum", SqlDbType.Int);
+                _cmd.Parameters.Add("@episodeCount", SqlDbType.Int);
+                _cmd.Parameters.Add("@watchList", SqlDbType.VarChar);
 
-                    _cmd.Parameters.Add("@showName", SqlDbType.VarChar);
-                    _cmd.Parameters.Add("@seasonNum", SqlDbType.Int);
-                    _cmd.Parameters.Add("@episodeCount", SqlDbType.Int);
-                    _cmd.Parameters.Add("@watchList", SqlDbType.VarChar);
+                _cmd.Parameters["@showName"].Value = showName;
+                _cmd.Parameters["@seasonNum"].Value = seasonNum;
+                _cmd.Parameters["@episodeCount"].Value = episodeCount;
+                _cmd.Parameters["@watchList"].Value = watchList;
 
-                    _cmd.Parameters["@showName"].Value = ShowName;
-                    _cmd.Parameters["@seasonNum"].Value = SeasonNumber;
-                    _cmd.Parameters["@episodeCount"].Value = EpisodeCount;
-                    _cmd.Parameters["@watchList"].Value = WatchList;
+                _cmd.ExecuteNonQuery();
 
-                    _cmd.ExecuteNonQuery();
-
-                    //_databaseStatus = String.Format("Record with ID:{0} updated", Id.ToString());
-                    //ReadStatus();
-                }
-                catch(Exception exc)
-                {
-
-                }
-                finally
-                {
-                    CloseConnection();
-                }
+                _databaseStatus = String.Format("Record with ID:{0} updated", table_id.ToString());
+                ReadStatus();
             }
             else
             {
-                //TODO: raise issue with connection
+                //TODO: raise issue with connection/unable to create table
             }
             CloseConnection();
         }
 
-        /// <summary>
-        /// TODO:
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns>None</returns>
-        public void DeleteRecord(int Id)
+        public void DeleteRecord(int table_id)
         {
-            OpenConnection();
-            if (_connectionOpen)
+            if (OpenConnection())
             {
-                try
-                {
-                    SqlCommand _cmd = new SqlCommand("DELETE FROM " + _tableName +
-                                                " WHERE " +
-                                                DatabaseColumns[0] + " = '" + Id.ToString() + "'",
+                SqlCommand _cmd = new SqlCommand("DELETE FROM " + TableName +
+                                                " WHERE " + 
+                                                _idColumn + " = '" + table_id.ToString() + "'",
                                                 _sqlConnection);
 
-                    _cmd.ExecuteNonQuery();
+               _cmd.ExecuteNonQuery();
 
-                    //_databaseStatus = String.Format("Record with ID:{0} deleted", Id.ToString());
-                    //ReadStatus();
-                }
-                catch (Exception exc)
-                {
-                    //TODO:
-                }
-                finally
-                {
-                    CloseConnection();
-                }
+                _databaseStatus = String.Format("Record with ID:{0} deleted", table_id.ToString() );
+                ReadStatus();
             }
             else
             {
-                //TODO: raise issue with connection/
+                //TODO: raise issue with connection/unable to create table
             }
             CloseConnection();
         }
+
+        protected virtual void OnDatabaseStatusRaised(DatabaseStatusRaisedEventArgs e)
+        {
+            EventHandler<DatabaseStatusRaisedEventArgs> handler = StatusRaised;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+    }
+
+    public class DatabaseStatusRaisedEventArgs : EventArgs
+    {
+        public string Status { get; set; }
     }
 }

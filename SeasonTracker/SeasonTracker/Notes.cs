@@ -12,9 +12,9 @@ namespace SeasonTracker
          * 
          * Hierarchy of Call Tree
          *                              
-         *          Home.cs (Form - communciates with database.cs or TvShow. Events can be raised at each class, but Home needs to subscribe to the events. 
+         *          MainView.cs (Form - communciates with database.cs or SeasonData. Events can be raised at each class, but MainView needs to subscribe to the events. 
          *          |               |   
-         *          Database.cs     TvShow.cs   (at this level, Database and TvShow do not communicate with each other)
+         *          Database.cs     SeasonData.cs   (at this level, Database and SeasonData do not communicate with each other)
          * 
          * 
          * 

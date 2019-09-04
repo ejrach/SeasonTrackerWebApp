@@ -28,67 +28,96 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.PanelYesNo = new System.Windows.Forms.Panel();
+            this.btnNo = new System.Windows.Forms.Button();
+            this.btnYes = new System.Windows.Forms.Button();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.PanelYesNo.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // PanelYesNo
             // 
-            this.panel1.Location = new System.Drawing.Point(339, 557);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
-            this.panel1.TabIndex = 0;
+            this.PanelYesNo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PanelYesNo.Controls.Add(this.lblMessage);
+            this.PanelYesNo.Controls.Add(this.btnNo);
+            this.PanelYesNo.Controls.Add(this.btnYes);
+            this.PanelYesNo.Location = new System.Drawing.Point(122, 143);
+            this.PanelYesNo.Margin = new System.Windows.Forms.Padding(7);
+            this.PanelYesNo.Name = "PanelYesNo";
+            this.PanelYesNo.Size = new System.Drawing.Size(559, 342);
+            this.PanelYesNo.TabIndex = 6;
             // 
-            // button1
+            // btnNo
             // 
-            this.button1.Location = new System.Drawing.Point(111, 144);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 83);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnNo.DialogResult = System.Windows.Forms.DialogResult.No;
+            this.btnNo.FlatAppearance.BorderSize = 0;
+            this.btnNo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.btnNo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnNo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNo.Font = new System.Drawing.Font("Candara Light", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNo.ForeColor = System.Drawing.Color.White;
+            this.btnNo.Location = new System.Drawing.Point(285, 116);
+            this.btnNo.Margin = new System.Windows.Forms.Padding(7);
+            this.btnNo.Name = "btnNo";
+            this.btnNo.Size = new System.Drawing.Size(233, 223);
+            this.btnNo.TabIndex = 3;
+            this.btnNo.Text = "No";
+            this.btnNo.UseVisualStyleBackColor = true;
+            this.btnNo.Click += new System.EventHandler(this.btnNo_Click);
             // 
-            // button2
+            // btnYes
             // 
-            this.button2.Location = new System.Drawing.Point(313, 163);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 107);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnYes.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.btnYes.FlatAppearance.BorderSize = 0;
+            this.btnYes.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(76)))), ((int)(((byte)(76)))));
+            this.btnYes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
+            this.btnYes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnYes.Font = new System.Drawing.Font("Candara Light", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYes.ForeColor = System.Drawing.Color.White;
+            this.btnYes.Location = new System.Drawing.Point(38, 116);
+            this.btnYes.Margin = new System.Windows.Forms.Padding(7);
+            this.btnYes.Name = "btnYes";
+            this.btnYes.Size = new System.Drawing.Size(233, 223);
+            this.btnYes.TabIndex = 2;
+            this.btnYes.Text = "Yes";
+            this.btnYes.UseVisualStyleBackColor = true;
+            this.btnYes.Click += new System.EventHandler(this.btnYes_Click);
             // 
-            // label1
+            // lblMessage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(400, 330);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 37);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Font = new System.Drawing.Font("Candara Light", 24F);
+            this.lblMessage.ForeColor = System.Drawing.Color.White;
+            this.lblMessage.Location = new System.Drawing.Point(41, 21);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(306, 88);
+            this.lblMessage.TabIndex = 7;
+            this.lblMessage.Text = "Message";
             // 
             // StyledMessageBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 37F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1456, 742);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
+            this.ClientSize = new System.Drawing.Size(852, 670);
+            this.Controls.Add(this.PanelYesNo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "StyledMessageBox";
-            this.Text = "StyledMessageBox";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "MessageBox";
+            this.Load += new System.EventHandler(this.StyledMessageBox_Load);
+            this.PanelYesNo.ResumeLayout(false);
+            this.PanelYesNo.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel PanelYesNo;
+        private System.Windows.Forms.Button btnNo;
+        private System.Windows.Forms.Button btnYes;
+        private System.Windows.Forms.Label lblMessage;
     }
 }
