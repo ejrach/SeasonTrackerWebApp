@@ -18,13 +18,14 @@ namespace SeasonTracker
         private string _serverName;
         private string _userName;
         private string _password;
-        private SqlConnection _dbConnection;
-        
+        private SqlConnection _sqlConnection;
+        private bool _connectionOpen;
+        private bool _tableIsCreated;
 
-        //Public auto implemented properties
-        //TBD
+        //Public properties
+        public List<string> DatabaseColumns;
 
-        //Constructor - create by typing "ctor" (snippet) and then tab
+        //Constructor - create by typing "ctor" (snippet) and then tab key
         public Database(string DatabaseName, 
             string TableName, 
             string ServerName, 
@@ -38,10 +39,23 @@ namespace SeasonTracker
             this._userName = UserName;
             this._password = Password;
 
-            //Define the SQL connection object
-            this._dbConnection = new SqlConnection(@"Data Source = " + _serverName + @";Initial Catalog=" + _databaseName + @";User ID=" + _userName + @";Password=" + _password + @";Pooling=False");
+            //On object creation, initialize the connection state
+            _connectionOpen = false;
 
+            //Define and create the SQL connection object with the connection string.
+            this._sqlConnection = new SqlConnection(@"Data Source = " + _serverName + @";Initial Catalog=" + _databaseName + @";User ID=" + _userName + @";Password=" + _password + @";Pooling=False");
+
+            //Populate the database record columns. This is what defines the records in the database.
+            DatabaseColumns.Add("Id");
+            DatabaseColumns.Add("show_name");
+            DatabaseColumns.Add("season_num");
+            DatabaseColumns.Add("episode_count");
+            DatabaseColumns.Add("watch_list");
+
+            //Create the database
             CreateDatabase();
+
+            //Verify the database table was created. If not, create it.
             if (!VerifyTable())
             {
                 CreateTable();
@@ -55,7 +69,8 @@ namespace SeasonTracker
         private void CreateDatabase()
         {
             //TODO: Need to figure out how to create a database programmatically.
-            //-> currently needs to be done in server explorer
+            //-> Currently just the database needs to be created in server explorer.
+            //     However, the table can be created programmatically as seen in this class. 
         }
 
         /// <summary>
@@ -64,17 +79,60 @@ namespace SeasonTracker
         /// <returns></returns>
         private bool VerifyTable()
         {
+            _tableIsCreated = false;
+            OpenConnection();
+            if (_connectionOpen)
+            {
+                string _checkTableQuery = "SELECT count(*) as IsExists FROM dbo.sysobjects where id = object_id('[dbo].[" + TableName + "]')";
 
-
-            return true;
+                SqlCommand _cmd = new SqlCommand(_checkTableQuery, _sqlConnection);
+                //int exists = (int)_cmd.ExecuteScalar();
+                if ((int)_cmd.ExecuteScalar() > 0)
+                {
+                    _tableIsCreated = true;
+                }
+            }
+            else
+            {
+                //TODO: raise issue with connection/unable to verify table
+            }
+            CloseConnection();
+            return _tableIsCreated;
         }
 
         /// <summary>
         /// Creates the table in the database
         /// </summary>
-        public void CreateTable()
+        private void CreateTable()
         {
+            //All of the text I got from using Visual Studio's built in "Add New Table" to 
+            //get a prototype. Type of "VARCHAR(MAX)" needs to be used instead of "Text", as "Text" is 
+            //being deprecated (http://sqlhints.com/2016/05/11/differences-between-sql-server-text-and-varcharmax-data-type/)
+            OpenConnection();
+            if (_connectionOpen)
+            {
+                try
+                {
+                    string _cmdCreateTable = "CREATE TABLE[dbo].[" + _tableName + "] " +
+                                "([" + DatabaseColumns[0] + "] INT IDENTITY(1,1) NOT NULL, " +
+                                "[" + DatabaseColumns[1] + "] VARCHAR(MAX) NULL, " +
+                                "[" + DatabaseColumns[2] + "] INT NULL, " +
+                                "[" + DatabaseColumns[3] + "] INT NULL, " +
+                                "[" + DatabaseColumns[4] + "] VARCHAR(MAX) NULL)";
 
+                    SqlCommand _cmd = new SqlCommand(_cmdCreateTable, _sqlConnection);
+                    _cmd.ExecuteNonQuery();
+                }
+                catch(Exception exc)
+                {
+                    //TODO: raise issue with unable to create table
+                }
+            }
+            else
+            {
+                //TODO: raise issue with connection
+            }
+            CloseConnection();
         }
 
 
@@ -82,20 +140,49 @@ namespace SeasonTracker
 
 
         /// <summary>
-        /// Opens the database connection and returns the state as TRUE if success, FALSE if fail.
+        /// Opens the database connection and sets the _connectionOpen state as TRUE if opened, FALSE if closed.
         /// </summary>
-        /// <returns></returns>
-        private bool OpenConnection()
+        /// <returns>None</returns>
+        private void OpenConnection()
         {
-
+            try
+            {
+                _sqlConnection.Open();
+                if (_sqlConnection.State == ConnectionState.Open)
+                    _connectionOpen = true;
+            }
+            catch (Exception ex)
+            {
+                //TODO: define what to happen here. Bring the message to the main window? show dialog?
+                if (_sqlConnection.State == ConnectionState.Open)
+                {
+                    _sqlConnection.Close();
+                }
+                _connectionOpen = false;
+            }
         }
 
         /// <summary>
-        /// Closes connection
+        /// Closes the database connection and sets the _connectionOpen state as FALSE if closed, TRUE if opened.
         /// </summary>
+        /// <returns>None</returns>
         private void CloseConnection()
         {
-
+            try
+            {
+                _sqlConnection.Close();
+                if (_sqlConnection.State == ConnectionState.Closed)
+                    _connectionOpen = false;
+            }
+            catch (Exception ex)
+            {
+                //TODO: define what to happen here. Bring it to the main window? show dialog?
+                if (_sqlConnection.State == ConnectionState.Open)
+                {
+                    _sqlConnection.Close();
+                }
+                _connectionOpen = false;
+            }
         }
 
 
@@ -108,6 +195,7 @@ namespace SeasonTracker
         /// TODO:
         /// </summary>
         /// <param name="TBD"></param>
+        /// <returns>None</returns>
         public void LoadDataGrid()
         {
 
@@ -120,6 +208,7 @@ namespace SeasonTracker
         /// <param name="seasonNum"></param>
         /// <param name="episodeCount"></param>
         /// <param name="watchList"></param>
+        /// <returns>None</returns>
         public void AddRecord()
         {
 
@@ -129,6 +218,7 @@ namespace SeasonTracker
         /// TODO:
         /// </summary>
         /// <param name="TBD"></param>
+        /// <returns>None</returns>
         public void UpdateRecord()
         {
 
@@ -138,6 +228,7 @@ namespace SeasonTracker
         /// TODO:
         /// </summary>
         /// <param name="TBD"></param>
+        /// <returns>None</returns>
         public void DeleteRecord()
         {
 
