@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SeasonTracker
 {
-    
-    public class Record
+    //The TvShow object is what is going to going to get passed to the Database class
+    public class TvShow
     {
         //Define the properties by typing "prop" then tab, and fill in the types and names.
         //These properties are publicly acessible.
@@ -16,12 +16,13 @@ namespace SeasonTracker
         public string Name { get; set; }
         public int EpisodeCount { get; set; }
         public int SeasonNumber { get; set; }
-
+        public string WatchList { get; set; }
+       
         //These properties are private. They don't need to be accessible to the public.
         //Encapsulation of this data since the implementation and behavior should be hidden.
-        private string _watchlist;
+        //private string _watchlist;
 
-        public Record()
+        public TvShow()
         {
 
         }

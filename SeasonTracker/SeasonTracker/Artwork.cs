@@ -9,5 +9,14 @@ namespace SeasonTracker
     public class Artwork
     {
 
+        public void GetTvShowArtwork()
+        {
+
+        }
+
+        public void GetArtworkPathWithIdAndFilename()
+        {
+
+        }
     }
 }
