@@ -23,7 +23,15 @@ namespace SeasonTracker
         private bool _tableIsCreated;
 
         //Public properties
-        public List<string> DatabaseColumns;
+        //Populate the database record columns. This is what defines the records in the database.
+        public List<string> DatabaseColumns = new List<string>()
+        {
+            "Id",
+            "show_name",
+            "season_num",
+            "episode_count",
+            "watch_list"
+        };
 
         //Constructor - create by typing "ctor" (snippet) and then tab key
         public Database(string DatabaseName, 
@@ -45,13 +53,6 @@ namespace SeasonTracker
             //Define and create the SQL connection object with the connection string.
             this._sqlConnection = new SqlConnection(@"Data Source = " + _serverName + @";Initial Catalog=" + _databaseName + @";User ID=" + _userName + @";Password=" + _password + @";Pooling=False");
 
-            //Populate the database record columns. This is what defines the records in the database.
-            DatabaseColumns.Add("Id");
-            DatabaseColumns.Add("show_name");
-            DatabaseColumns.Add("season_num");
-            DatabaseColumns.Add("episode_count");
-            DatabaseColumns.Add("watch_list");
-
             //Create the database
             CreateDatabase();
 
@@ -61,8 +62,7 @@ namespace SeasonTracker
                 CreateTable();
             }
         }
-
-
+        
         /// <summary>
         /// TODO: Create this function when I know how to do it programatically
         /// </summary>
@@ -83,7 +83,7 @@ namespace SeasonTracker
             OpenConnection();
             if (_connectionOpen)
             {
-                string _checkTableQuery = "SELECT count(*) as IsExists FROM dbo.sysobjects where id = object_id('[dbo].[" + TableName + "]')";
+                string _checkTableQuery = "SELECT count(*) as IsExists FROM dbo.sysobjects where id = object_id('[dbo].[" + _tableName + "]')";
 
                 SqlCommand _cmd = new SqlCommand(_checkTableQuery, _sqlConnection);
                 //int exists = (int)_cmd.ExecuteScalar();
@@ -135,10 +135,6 @@ namespace SeasonTracker
             CloseConnection();
         }
 
-
-
-
-
         /// <summary>
         /// Opens the database connection and sets the _connectionOpen state as TRUE if opened, FALSE if closed.
         /// </summary>
@@ -151,7 +147,7 @@ namespace SeasonTracker
                 if (_sqlConnection.State == ConnectionState.Open)
                     _connectionOpen = true;
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
                 //TODO: define what to happen here. Bring the message to the main window? show dialog?
                 if (_sqlConnection.State == ConnectionState.Open)
@@ -174,7 +170,7 @@ namespace SeasonTracker
                 if (_sqlConnection.State == ConnectionState.Closed)
                     _connectionOpen = false;
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
                 //TODO: define what to happen here. Bring it to the main window? show dialog?
                 if (_sqlConnection.State == ConnectionState.Open)
@@ -182,6 +178,18 @@ namespace SeasonTracker
                     _sqlConnection.Close();
                 }
                 _connectionOpen = false;
+            }
+        }
+
+        private void ReadStatus()
+        {
+            try
+            {
+
+            }
+            catch (Exception exc)
+            {
+                //TODO: 
             }
         }
 
@@ -198,40 +206,168 @@ namespace SeasonTracker
         /// <returns>None</returns>
         public void LoadDataGrid()
         {
+            try
+            {
 
+            }
+            catch (Exception exc)
+            {
+                //TODO: 
+            }
         }
 
         /// <summary>
         /// TODO:
         /// </summary>
-        /// <param name="showName"></param>
-        /// <param name="seasonNum"></param>
-        /// <param name="episodeCount"></param>
-        /// <param name="watchList"></param>
+        /// <param name="ShowName"></param>
+        /// <param name="SeasonNumber"></param>
+        /// <param name="EpisodeCount"></param>
+        /// <param name="WatchList"></param>
         /// <returns>None</returns>
-        public void AddRecord()
+        public void AddRecord(string ShowName, int SeasonNumber, int EpisodeCount, string WatchList)
         {
+            OpenConnection();
+            if (_connectionOpen)
+            {
+                try
+                {
+                    SqlCommand _cmd = new SqlCommand("INSERT INTO " + _tableName +
+                                                "(" +
+                                                DatabaseColumns[1] + "," +
+                                                DatabaseColumns[2] + "," +
+                                                DatabaseColumns[3] + "," +
+                                                DatabaseColumns[4] +
+                                                ")" + " VALUES(" +
+                                                "@showName," +
+                                                "@seasonNum," +
+                                                "@episodeCount," +
+                                                "@watchList" +
+                                                ")", _sqlConnection);
 
+                    _cmd.Parameters.Add("@showName", SqlDbType.VarChar);
+                    _cmd.Parameters.Add("@seasonNum", SqlDbType.Int);
+                    _cmd.Parameters.Add("@episodeCount", SqlDbType.Int);
+                    _cmd.Parameters.Add("@watchList", SqlDbType.VarChar);
+
+                    _cmd.Parameters["@showName"].Value = ShowName;
+                    _cmd.Parameters["@seasonNum"].Value = SeasonNumber;
+                    _cmd.Parameters["@episodeCount"].Value = EpisodeCount;
+                    _cmd.Parameters["@watchList"].Value = WatchList;
+
+                    _cmd.ExecuteNonQuery();
+                }
+                catch(Exception exc)
+                {
+                    //TODO: 
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+                
+                //_databaseStatus = "Record Added";
+                //ReadStatus();
+            }
+            else
+            {
+                //TODO: raise issue with connection
+            }
+            CloseConnection();
         }
 
         /// <summary>
         /// TODO:
         /// </summary>
-        /// <param name="TBD"></param>
+        /// <param name="Id"></param>
+        /// <param name="ShowName"></param>
+        /// <param name="SeasonNumber"></param>
+        /// <param name="EpisodeCount"></param>
+        /// <param name="WatchList"></param>
         /// <returns>None</returns>
-        public void UpdateRecord()
+        public void UpdateRecord(int Id, string ShowName, int SeasonNumber, int EpisodeCount, string WatchList)
         {
+            OpenConnection();
+            if (_connectionOpen)
+            {
+                try
+                {
+                    SqlCommand _cmd = new SqlCommand("UPDATE " + _tableName +
+                                                " SET " +
+                                                DatabaseColumns[1] + "=@showName, " +
+                                                DatabaseColumns[2] + "=@seasonNum, " +
+                                                DatabaseColumns[3] + "=@episodeCount, " +
+                                                DatabaseColumns[4] + "=@watchList" +
+                                                " WHERE " +
+                                                DatabaseColumns[0] + "=" + Id.ToString(),
+                                                _sqlConnection);
 
+                    _cmd.Parameters.Add("@showName", SqlDbType.VarChar);
+                    _cmd.Parameters.Add("@seasonNum", SqlDbType.Int);
+                    _cmd.Parameters.Add("@episodeCount", SqlDbType.Int);
+                    _cmd.Parameters.Add("@watchList", SqlDbType.VarChar);
+
+                    _cmd.Parameters["@showName"].Value = ShowName;
+                    _cmd.Parameters["@seasonNum"].Value = SeasonNumber;
+                    _cmd.Parameters["@episodeCount"].Value = EpisodeCount;
+                    _cmd.Parameters["@watchList"].Value = WatchList;
+
+                    _cmd.ExecuteNonQuery();
+
+                    //_databaseStatus = String.Format("Record with ID:{0} updated", Id.ToString());
+                    //ReadStatus();
+                }
+                catch(Exception exc)
+                {
+
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+            }
+            else
+            {
+                //TODO: raise issue with connection
+            }
+            CloseConnection();
         }
 
         /// <summary>
         /// TODO:
         /// </summary>
-        /// <param name="TBD"></param>
+        /// <param name="Id"></param>
         /// <returns>None</returns>
-        public void DeleteRecord()
+        public void DeleteRecord(int Id)
         {
+            OpenConnection();
+            if (_connectionOpen)
+            {
+                try
+                {
+                    SqlCommand _cmd = new SqlCommand("DELETE FROM " + _tableName +
+                                                " WHERE " +
+                                                DatabaseColumns[0] + " = '" + Id.ToString() + "'",
+                                                _sqlConnection);
 
+                    _cmd.ExecuteNonQuery();
+
+                    //_databaseStatus = String.Format("Record with ID:{0} deleted", Id.ToString());
+                    //ReadStatus();
+                }
+                catch (Exception exc)
+                {
+                    //TODO:
+                }
+                finally
+                {
+                    CloseConnection();
+                }
+            }
+            else
+            {
+                //TODO: raise issue with connection/
+            }
+            CloseConnection();
         }
     }
 }
