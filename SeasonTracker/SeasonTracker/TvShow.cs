@@ -17,11 +17,12 @@ namespace SeasonTracker
         public int EpisodeCount { get; set; }
         public int SeasonNumber { get; set; }
         public string WatchList { get; set; }
-       
+
         //These properties are private. They don't need to be accessible to the public.
         //Encapsulation of this data since the implementation and behavior should be hidden.
         //private string _watchlist;
 
+        //Constructor - create by typing "ctor" (snippet) and then tab
         public TvShow()
         {
 

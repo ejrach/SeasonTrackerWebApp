@@ -8,6 +8,11 @@ namespace SeasonTracker
 {
     public class Status
     {
+        //Constructor - create by typing "ctor" (snippet) and then tab
+        public Status()
+        {
+
+        }
 
     }
 }
