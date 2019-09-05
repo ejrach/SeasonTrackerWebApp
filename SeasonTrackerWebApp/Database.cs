@@ -92,7 +92,7 @@ namespace SeasonTrackerWebApp
             }
             else
             {
-                //TODO: raise issue with connection/unable to verify table
+                throw new InvalidOperationException("Cannot verify table. Connection could not be opened.");
             }
             CloseConnection();
             return _tableIsCreated;
@@ -121,14 +121,14 @@ namespace SeasonTrackerWebApp
                     SqlCommand _cmd = new SqlCommand(_cmdCreateTable, _sqlConnection);
                     _cmd.ExecuteNonQuery();
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
-                    //TODO: raise issue with unable to create table
+                    throw new System.InvalidOperationException("Cannot create table.");
                 }
             }
             else
             {
-                //TODO: raise issue with connection
+                throw new InvalidOperationException("Unable to create table. Connection could not be opened.");
             }
             CloseConnection();
         }
@@ -148,6 +148,8 @@ namespace SeasonTrackerWebApp
             catch (Exception exc)
             {
                 //TODO: define what to happen here. Bring the message to the main window? show dialog?
+                
+
                 if (_sqlConnection.State == ConnectionState.Open)
                 {
                     _sqlConnection.Close();
