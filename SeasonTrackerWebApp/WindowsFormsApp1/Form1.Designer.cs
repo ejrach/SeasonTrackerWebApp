@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.BottomPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,15 +42,24 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 102;
             this.dataGridView1.RowTemplate.Height = 40;
-            this.dataGridView1.Size = new System.Drawing.Size(1710, 554);
+            this.dataGridView1.Size = new System.Drawing.Size(2155, 828);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // BottomPanel
+            // 
+            this.BottomPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.BottomPanel.Location = new System.Drawing.Point(-245, 834);
+            this.BottomPanel.Name = "BottomPanel";
+            this.BottomPanel.Size = new System.Drawing.Size(2016, 307);
+            this.BottomPanel.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.ClientSize = new System.Drawing.Size(1710, 785);
+            this.ClientSize = new System.Drawing.Size(2155, 1153);
+            this.Controls.Add(this.BottomPanel);
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
@@ -64,6 +74,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Panel BottomPanel;
     }
 }
 

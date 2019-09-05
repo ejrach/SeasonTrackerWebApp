@@ -11,12 +11,14 @@ namespace SeasonTrackerWebApp
     {
         //Private properties, hidden from the outside world - Encapsulation.
         //Nobody should care how the database is connected or what these properties are.
-        private string _databaseName;
-        private string _tableName;
-        private string _serverName;
-        private string _userName;
-        private string _password;
-        private SqlConnection _sqlConnection;
+        //Assigning readonly access modifier prevents property from being reassigned after instance of an 
+        //object is created.
+        private readonly string _databaseName;
+        private readonly string _tableName;
+        private readonly string _serverName;
+        private readonly string _userName;
+        private readonly string _password;
+        private readonly SqlConnection _sqlConnection;      
         private bool _connectionOpen;
         private bool _tableIsCreated;
 
@@ -51,8 +53,8 @@ namespace SeasonTrackerWebApp
             //Define and create the SQL connection object with the connection string.
             this._sqlConnection = new SqlConnection(@"Data Source = " + _serverName + @";Initial Catalog=" + _databaseName + @";User ID=" + _userName + @";Password=" + _password + @";Pooling=False");
 
-            //Create the database
-            CreateDatabase();
+            //TODO: Create the database programmatically. For now need to create through 'Microsoft SQL Server'
+            //CreateDatabase();
 
             //Verify the database table was created. If not, create it.
             if (!VerifyTable())
@@ -84,7 +86,6 @@ namespace SeasonTrackerWebApp
                 string _checkTableQuery = "SELECT count(*) as IsExists FROM dbo.sysobjects where id = object_id('[dbo].[" + _tableName + "]')";
 
                 SqlCommand _cmd = new SqlCommand(_checkTableQuery, _sqlConnection);
-                //int exists = (int)_cmd.ExecuteScalar();
                 if ((int)_cmd.ExecuteScalar() > 0)
                 {
                     _tableIsCreated = true;
@@ -149,7 +150,6 @@ namespace SeasonTrackerWebApp
             {
                 //TODO: define what to happen here. Bring the message to the main window? show dialog?
                 
-
                 if (_sqlConnection.State == ConnectionState.Open)
                 {
                     _sqlConnection.Close();

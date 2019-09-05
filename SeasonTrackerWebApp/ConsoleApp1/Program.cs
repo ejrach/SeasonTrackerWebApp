@@ -8,7 +8,8 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            //Set up the connection to the database
+            //Set up the connection to the database.
+            //Creates the connection string
             var database = new Database("SeasonTrackerDatabase",
                 "SeasonTrackerTable",
                 "DESKTOP-9C0DIO8",
