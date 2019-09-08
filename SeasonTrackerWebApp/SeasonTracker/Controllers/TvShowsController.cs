@@ -9,11 +9,23 @@ namespace SeasonTracker.Controllers
 {
     public class TvShowsController : Controller
     {
-        // GET: TvShows/Random
-        public ActionResult Random()
+        // GET: TvShows
+        // This is what renders the Index page for TvShows
+        public ViewResult Index()
         {
-            var tvShow = new TvShow() { Name = "Game of Thrones" };
-            return View(tvShow);
+            var tvShows = GetTvShows();
+
+            return View(tvShows);
         }
+
+        private IEnumerable<TvShow> GetTvShows()
+        {
+            return new List<TvShow>
+            {
+                new TvShow { Id = 1, Name = "Game of Thrones" },
+                new TvShow { Id = 2, Name = "Big Bang Theory" }
+            };
+        }
+
     }
 }
