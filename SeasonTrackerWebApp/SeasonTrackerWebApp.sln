@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{F2DAEC89-8AB1-4BB2-A6A5-B2469141B8D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldWebAppCore", "HelloWorld\HelloWorldWebAppCore.csproj", "{F1919214-EE51-4CE2-98DF-F027B359E441}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWebAppCore", "HelloWorld\HelloWorldWebAppCore.csproj", "{F1919214-EE51-4CE2-98DF-F027B359E441}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeasonTracker", "SeasonTracker\SeasonTracker.csproj", "{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{F1919214-EE51-4CE2-98DF-F027B359E441}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1919214-EE51-4CE2-98DF-F027B359E441}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1919214-EE51-4CE2-98DF-F027B359E441}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
