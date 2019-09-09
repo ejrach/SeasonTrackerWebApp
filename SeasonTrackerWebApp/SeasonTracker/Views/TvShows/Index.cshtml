@@ -16,11 +16,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Movies</h2>
+<h2>Tv Shows</h2>
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>Tv Show</th>
+            <th>Tv Show Name</th>
+            <th>Season Number</th>
+            <th>Number of Episodes</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +30,8 @@
         {
             <tr>
                 <td>@tvShow.TvShowName</td>
+                <td>@tvShow.SeasonNumber</td>
+                <td>@tvShow.NumberOfEpisodes</td>
             </tr>
         }
     </tbody>

@@ -28,7 +28,8 @@ else
             <tr>
                 @*These are the table headings*@
                 <th>Member Names</th>
-                <th>Discount Rate</th>
+                <th>Member ID</th>
+                <th>Account Type</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +38,8 @@ else
                 <tr>
                     @*This is the content which fits under each table heading*@
                     <td>@Html.ActionLink(member.MemberName, "Details", "Members", new { id = member.Id }, null)</td>
-                    <td>@member.AccountType.DiscountRate%</td>
+                    <td>@member.Id</td>
+                    <td>@member.AccountType.Name</td>
                 </tr>
             }
         </tbody>

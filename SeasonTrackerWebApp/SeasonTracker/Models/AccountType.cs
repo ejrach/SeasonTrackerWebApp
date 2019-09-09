@@ -14,6 +14,7 @@ namespace SeasonTracker.Models
         // 3) Paid (yearly) - access to the same additional features as the monthly, but at a discount - "Devotee" Plan
         // 4) Paid (one time) - master access to all features of the web app - "Addict"
         public byte Id { get; set; }
+        public string Name { get; set; }
         public short SignupFee { get; set; }
         public byte DurationInMonths { get; set; }
         public byte DiscountRate { get; set; }

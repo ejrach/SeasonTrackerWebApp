@@ -144,6 +144,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TvShowsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\WatchListsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,11 +192,44 @@
     <Compile Include="Migrations\201909091631368_PopulateAccountTypes.Designer.cs">
       <DependentUpon>201909091631368_PopulateAccountTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909091758395_AddNameToAccountTypeModel.cs" />
+    <Compile Include="Migrations\201909091758395_AddNameToAccountTypeModel.Designer.cs">
+      <DependentUpon>201909091758395_AddNameToAccountTypeModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909091759543_InsertAccountTypeNamesIntoDatabase.cs" />
+    <Compile Include="Migrations\201909091759543_InsertAccountTypeNamesIntoDatabase.Designer.cs">
+      <DependentUpon>201909091759543_InsertAccountTypeNamesIntoDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909092034541_UpdateTvShowModel.cs" />
+    <Compile Include="Migrations\201909092034541_UpdateTvShowModel.Designer.cs">
+      <DependentUpon>201909092034541_UpdateTvShowModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909092036145_PopulateTvShows.cs" />
+    <Compile Include="Migrations\201909092036145_PopulateTvShows.Designer.cs">
+      <DependentUpon>201909092036145_PopulateTvShows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909092041503_UpdateTvShowPropertySize.cs" />
+    <Compile Include="Migrations\201909092041503_UpdateTvShowPropertySize.Designer.cs">
+      <DependentUpon>201909092041503_UpdateTvShowPropertySize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909092042372_UpdateTvShowPropertySize1.cs" />
+    <Compile Include="Migrations\201909092042372_UpdateTvShowPropertySize1.Designer.cs">
+      <DependentUpon>201909092042372_UpdateTvShowPropertySize1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909092056030_AddWatchListModelAndDbSet.cs" />
+    <Compile Include="Migrations\201909092056030_AddWatchListModelAndDbSet.Designer.cs">
+      <DependentUpon>201909092056030_AddWatchListModelAndDbSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909092146023_AddWatchListModel.cs" />
+    <Compile Include="Migrations\201909092146023_AddWatchListModel.Designer.cs">
+      <DependentUpon>201909092146023_AddWatchListModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\TvShow.cs" />
     <Compile Include="Models\Member.cs" />
+    <Compile Include="Models\WatchList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +268,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\TvShows\Random.cshtml" />
     <Content Include="Views\TvShows\Index.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
@@ -242,6 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\WatchLists\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -289,6 +323,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909091631368_PopulateAccountTypes.resx">
       <DependentUpon>201909091631368_PopulateAccountTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909091758395_AddNameToAccountTypeModel.resx">
+      <DependentUpon>201909091758395_AddNameToAccountTypeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909091759543_InsertAccountTypeNamesIntoDatabase.resx">
+      <DependentUpon>201909091759543_InsertAccountTypeNamesIntoDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909092034541_UpdateTvShowModel.resx">
+      <DependentUpon>201909092034541_UpdateTvShowModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909092036145_PopulateTvShows.resx">
+      <DependentUpon>201909092036145_PopulateTvShows.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909092041503_UpdateTvShowPropertySize.resx">
+      <DependentUpon>201909092041503_UpdateTvShowPropertySize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909092042372_UpdateTvShowPropertySize1.resx">
+      <DependentUpon>201909092042372_UpdateTvShowPropertySize1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909092056030_AddWatchListModelAndDbSet.resx">
+      <DependentUpon>201909092056030_AddWatchListModelAndDbSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909092146023_AddWatchListModel.resx">
+      <DependentUpon>201909092146023_AddWatchListModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

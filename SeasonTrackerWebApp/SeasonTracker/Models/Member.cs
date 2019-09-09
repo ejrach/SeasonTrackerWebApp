@@ -19,7 +19,6 @@ namespace SeasonTracker.Models
         public bool IsSubscribedToNewsLetter { get; set; }
         public AccountType AccountType { get; set; }
         public byte AccountTypeId { get; set; }
-
-
+        public WatchList WatchList { get; set; }
     }
 }

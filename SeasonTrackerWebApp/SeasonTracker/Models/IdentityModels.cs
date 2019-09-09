@@ -34,6 +34,7 @@ namespace SeasonTracker.Models
         public DbSet<TvShow> TvShows { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<WatchList> WatchLists { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

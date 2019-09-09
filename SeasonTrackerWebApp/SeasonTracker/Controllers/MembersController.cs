@@ -37,7 +37,8 @@ namespace SeasonTracker.Controllers
             //The List of members is displayed on the Index page.
             //Index.cshtml provides the c# and the html markup in order to display information to the user.
             //We are using "Include" method here to load the Members along with their account types
-            //together. This is called "Eager Loading". "m" is member, and it goes to m.AccountType.
+            //together (because it comes from another table). This is called "Eager Loading". 
+            //"m" is member, and it goes to m.AccountType.
             var members = _context.Members.Include(m => m.AccountType).ToList();
 
             return View(members);
@@ -47,7 +48,7 @@ namespace SeasonTracker.Controllers
         public ActionResult Details(int id)
         {
             //When the Index page is loaded, each user is displayed with an ActionLink that processes this "Details" action method.
-            var member = _context.Members.SingleOrDefault(c => c.Id == id);
+            var member = _context.Members.Include(m => m.AccountType).SingleOrDefault(m => m.Id == id);
 
             if (member == null)
                 return HttpNotFound();
