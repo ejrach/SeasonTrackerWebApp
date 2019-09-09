@@ -187,6 +187,10 @@
     <Compile Include="Migrations\201909090002002_RemoveAccountNameFromAccountTypeModel1.Designer.cs">
       <DependentUpon>201909090002002_RemoveAccountNameFromAccountTypeModel1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909091631368_PopulateAccountTypes.cs" />
+    <Compile Include="Migrations\201909091631368_PopulateAccountTypes.Designer.cs">
+      <DependentUpon>201909091631368_PopulateAccountTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -282,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909090002002_RemoveAccountNameFromAccountTypeModel1.resx">
       <DependentUpon>201909090002002_RemoveAccountNameFromAccountTypeModel1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909091631368_PopulateAccountTypes.resx">
+      <DependentUpon>201909091631368_PopulateAccountTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
