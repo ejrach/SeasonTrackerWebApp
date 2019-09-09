@@ -8,7 +8,6 @@ namespace SeasonTracker.Models
 {
     public class TvShow
     {
-        //Look at the Vidly project to see how to not make specific properties nullable.
         public int Id { get; set; }
         [Required]
         [StringLength(255)]
