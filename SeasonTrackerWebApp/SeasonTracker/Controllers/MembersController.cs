@@ -26,6 +26,10 @@ namespace SeasonTracker.Controllers
         {
             _context.Dispose();
         }
+        public ActionResult New()
+        {
+            return View();
+        }
 
         // GET: Members
         // This is what renders the "Index" page for Members

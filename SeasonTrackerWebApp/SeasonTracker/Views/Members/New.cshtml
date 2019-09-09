@@ -1,0 +1,26 @@
+﻿@model SeasonTracker.Models.Member
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Member</h2>
+
+@*This creates a "form" block*@
+@using (Html.BeginForm("Create", "Members"))
+{
+    //There is special markup that we need to use here that is used
+    //by Bootstrap to render dynamic forms. The classes defined here are
+    //used by bootstrap to style the form and its controls.
+    <div class="form-group">
+        @Html.Label("Name")
+        @Html.TextBoxFor(m => m.MemberName, new { @class = "form-control" })
+    </div>
+    //go to getbootstrap.com to find the class name for checkbox
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.IsSubscribedToNewsLetter) Subscribed to Newsletter?
+        </label>
+    </div>
+}
+
