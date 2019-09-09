@@ -12,7 +12,7 @@ namespace SeasonTracker.Models
         public int Id { get; set; }
         [Required]
         [StringLength(255)]
-        public string Name { get; set; }
+        public string TvShowName { get; set; }
         public int Season { get; set; }
         public int Episodes { get; set; }
 

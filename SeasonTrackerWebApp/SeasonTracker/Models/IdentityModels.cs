@@ -28,7 +28,12 @@ namespace SeasonTracker.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         //Add DbSets
+        //NOTE: Anytime this is modified must do migrations:
+        // PM > add-migration name_of_migration -force
+        // PM > update-database
         public DbSet<TvShow> TvShows { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<AccountType> AccountTypes { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

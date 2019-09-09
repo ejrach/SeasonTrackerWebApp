@@ -3,17 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{351B2D3E-52FB-40CA-9392-F7C100EB05F6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE8B8D41-E16D-4D67-9409-529732A549AF}"
-	ProjectSection(SolutionItems) = preProject
-		Database.cs = Database.cs
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{F2DAEC89-8AB1-4BB2-A6A5-B2469141B8D9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWebAppCore", "HelloWorld\HelloWorldWebAppCore.csproj", "{F1919214-EE51-4CE2-98DF-F027B359E441}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeasonTracker", "SeasonTracker\SeasonTracker.csproj", "{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}"
 EndProject
 Global
@@ -22,18 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{351B2D3E-52FB-40CA-9392-F7C100EB05F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{351B2D3E-52FB-40CA-9392-F7C100EB05F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{351B2D3E-52FB-40CA-9392-F7C100EB05F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{351B2D3E-52FB-40CA-9392-F7C100EB05F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2DAEC89-8AB1-4BB2-A6A5-B2469141B8D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2DAEC89-8AB1-4BB2-A6A5-B2469141B8D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2DAEC89-8AB1-4BB2-A6A5-B2469141B8D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2DAEC89-8AB1-4BB2-A6A5-B2469141B8D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1919214-EE51-4CE2-98DF-F027B359E441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1919214-EE51-4CE2-98DF-F027B359E441}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1919214-EE51-4CE2-98DF-F027B359E441}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1919214-EE51-4CE2-98DF-F027B359E441}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AD4A51D-260E-4B98-9F63-F7CF515A6FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU

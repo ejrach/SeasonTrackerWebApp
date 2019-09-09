@@ -22,8 +22,8 @@ namespace SeasonTracker.Controllers
         {
             return new List<TvShow>
             {
-                new TvShow { Id = 1, Name = "Game of Thrones" },
-                new TvShow { Id = 2, Name = "Big Bang Theory" }
+                new TvShow { Id = 1, TvShowName = "Game of Thrones" },
+                new TvShow { Id = 2, TvShowName = "Big Bang Theory" }
             };
         }
 
