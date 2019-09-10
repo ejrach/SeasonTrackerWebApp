@@ -41,15 +41,16 @@ namespace SeasonTracker.Controllers
                 AccountTypes = accountTypes
             };
 
-            return View("CustomerForm", viewModel);
+            return View("MemberForm", viewModel);
         }
 
-        //Define the 'Create' action for Member. This is model binding. MVC framework binds
+        //Define the 'Save' action for Member. This is model binding. MVC framework binds
         //this model to the request data.
         //Here we are saving/persiting data to the database.
+        [HttpPost]
         public ActionResult Save(Member member)
         {
-            //if the customer Id is 0, then we have a new customer
+            //if the member Id is 0, then we have a new member
             if (member.Id == 0)
                 //To save the data to the database, we need to create a context to it.
                 _context.Members.Add(member);
@@ -57,7 +58,7 @@ namespace SeasonTracker.Controllers
             {
                 //Using the Single method here because if the given member is not found, 
                 //we want to throw an exception. This action should only be called anyways because of posting
-                //the customer form.
+                //the member form.
                 var memberInDb = _context.Members.Single(m => m.Id == member.Id);
 
                 memberInDb.MemberName = member.MemberName;
@@ -68,7 +69,7 @@ namespace SeasonTracker.Controllers
             //Persist the changes. This creates SQL statements at runtime, within a transaction.
             _context.SaveChanges();
 
-            //Now redirect the customer to the Customers page "Index"
+            //Now redirect the members to the members page "Index"
             return RedirectToAction("Index", "Members");
         }
 
@@ -112,7 +113,7 @@ namespace SeasonTracker.Controllers
             if (member == null)
                 return HttpNotFound();
 
-            //New we need to render the new customer form, which is based on the View Model, and specify the 
+            //New we need to render the members edit form, which is based on the View Model, and specify the 
             //view name.
             var viewModel = new MemberFormViewModel
             {

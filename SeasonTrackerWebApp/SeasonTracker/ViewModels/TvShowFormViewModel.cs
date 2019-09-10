@@ -7,23 +7,20 @@ using SeasonTracker.Models;
 namespace SeasonTracker.ViewModels
 {
     //In this view model, we are encapsulating all of the data required for 
-    //displaying data within the Member Form View.
+    //displaying data within the Tv Show Form View.
     //This ViewModel needs to exist in order to pass a view object within MembersController
-    public class MemberFormViewModel
+    public class TvShowFormViewModel
     {
-        //List of account types
-        public IEnumerable<AccountType> AccountTypes { get; set; }
-
-        //Let's reuse the Member model
-        public Member Member { get; set; }
+        //Let's reuse the TvShow model
+        public TvShow TvShow { get; set; }
 
         public string Title
         {
             get
             {
-                if (Member != null && Member.Id != 0)
-                    return "Edit Member";
-                return "New Member";
+                if (TvShow != null && TvShow.Id != 0)
+                    return "Edit Tv Show";
+                return "New Tv Show";
             }
         }
     }

@@ -1,10 +1,12 @@
 ﻿@model SeasonTracker.ViewModels.MemberFormViewModel
 @{
-    ViewBag.Title = "New";
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New Member</h2>
+@*This view is for Editing or Creating New Members*@
+
+<h2>@Model.Title</h2>
 
 @*This creates a "form" block*@
 @using (Html.BeginForm("Save", "Members"))

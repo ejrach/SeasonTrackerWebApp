@@ -17,6 +17,9 @@
 }
 
 <h2>Tv Shows</h2>
+<p>
+    @Html.ActionLink("New Tv Show", "New", "TvShows", null, new { @class = "btn btn-primary" })
+</p>
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -29,7 +32,7 @@
         @foreach (var tvShow in Model)
         {
             <tr>
-                <td>@tvShow.TvShowName</td>
+                <td>@Html.ActionLink(tvShow.TvShowName, "Edit", "TvShows", new { id = tvShow.Id }, null)</td>
                 <td>@tvShow.SeasonNumber</td>
                 <td>@tvShow.NumberOfEpisodes</td>
             </tr>

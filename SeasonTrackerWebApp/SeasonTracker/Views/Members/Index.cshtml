@@ -17,6 +17,9 @@
 }
 
 <h2>Members</h2>
+<p>
+    @Html.ActionLink("New Member", "New", "Members", null, new { @class = "btn btn-primary" })
+</p>
 @if (!Model.Any())
 {
     <p>We don't have any members yet.</p>
