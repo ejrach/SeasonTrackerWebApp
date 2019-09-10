@@ -1,0 +1,16 @@
+﻿@model  SeasonTracker.ViewModels.MemberWatchListViewModel
+@{
+    ViewBag.Title = "ViewingDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewingDetails</h2>
+
+<h2>@Model.Name</h2>
+<ul>
+    @foreach (var item in Model.WatchLists)
+    {
+        <li>Hello</li>
+    }
+
+</ul>

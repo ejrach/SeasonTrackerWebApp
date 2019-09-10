@@ -103,6 +103,29 @@ namespace SeasonTracker.Controllers
             return View(member);
         }
 
+        public ActionResult ViewingDetails(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            Member member = _context.Members
+                .Include(m => m.WatchLists)
+                .Where(m => m.Id == id)
+                .SingleOrDefault();
+
+            if (member == null)
+                return HttpNotFound();
+
+            var viewModel = new MemberWatchListViewModel
+            {
+                Id = member.Id,
+                Name = member.MemberName,
+                WatchLists = member.WatchLists.ToList()
+            };
+
+            return View(viewModel);
+        }
+
         //This displays the MemberForm for editing
         public ActionResult Edit(int id)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using SeasonTracker.Models;
@@ -32,9 +33,12 @@ namespace SeasonTracker.Controllers
         public ViewResult Index()
         {
             //load the TvShows from the DbContext
+            //var watchLists = _context.WatchLists.Include(w => w.Member.MemberName).ToList();
             var watchLists = _context.WatchLists.ToList();
 
             return View(watchLists);
         }
+
+
     }
 }

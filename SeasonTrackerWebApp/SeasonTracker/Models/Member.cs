@@ -28,7 +28,7 @@ namespace SeasonTracker.Models
         [Display(Name = "Account Type")]
         public byte AccountTypeId { get; set; }
 
-        public WatchList WatchList { get; set; }
+        public virtual ICollection<WatchList> WatchLists { get; set; }
 
     }
 }

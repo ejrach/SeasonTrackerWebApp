@@ -144,7 +144,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TvShowsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
-    <Compile Include="Controllers\WatchListsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,6 +227,10 @@
     <Compile Include="Migrations\201909101741479_UpdateTvShowsForm.Designer.cs">
       <DependentUpon>201909101741479_UpdateTvShowsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909102306406_UpdateWatchlistModel.cs" />
+    <Compile Include="Migrations\201909102306406_UpdateWatchlistModel.Designer.cs">
+      <DependentUpon>201909102306406_UpdateWatchlistModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -236,8 +239,8 @@
     <Compile Include="Models\WatchList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MemberFormViewModel.cs" />
+    <Compile Include="ViewModels\MemberWatchListViewModel.cs" />
     <Compile Include="ViewModels\TvShowFormViewModel.cs" />
-    <Compile Include="ViewModels\WatchListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-lumen.css" />
@@ -283,7 +286,7 @@
     <Content Include="Views\Members\MemberForm.cshtml" />
     <Content Include="Views\TvShows\TvShowForm.cshtml" />
     <Content Include="Views\TvShows\Details.cshtml" />
-    <Content Include="Views\WatchLists\Index.cshtml" />
+    <Content Include="Views\Members\ViewingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -361,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909101741479_UpdateTvShowsForm.resx">
       <DependentUpon>201909101741479_UpdateTvShowsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909102306406_UpdateWatchlistModel.resx">
+      <DependentUpon>201909102306406_UpdateWatchlistModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
