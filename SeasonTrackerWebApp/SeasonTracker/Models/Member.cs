@@ -13,12 +13,22 @@ namespace SeasonTracker.Models
         //  PM > add-migration AddIsSubscribedToCustomer
         //  PM > Update-Database
         public int Id { get; set; }
+
+        //Apply data annotation for the HTML markup for the "MemberName" property.
+        //This can be changed to whatever you want displayed wherever you you use MemberName
         [Required]
         [StringLength(255)]
+        [Display(Name = "Member Name")]
         public string MemberName { get; set; }
+
         public bool IsSubscribedToNewsLetter { get; set; }
+
         public AccountType AccountType { get; set; }
+
+        [Display(Name = "Account Type")]
         public byte AccountTypeId { get; set; }
+
         public WatchList WatchList { get; set; }
+
     }
 }

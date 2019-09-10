@@ -1,4 +1,4 @@
-﻿@model SeasonTracker.Models.Member
+﻿@model SeasonTracker.ViewModels.NewMemberViewModel
 @{
     ViewBag.Title = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,14 +13,19 @@
     //by Bootstrap to render dynamic forms. The classes defined here are
     //used by bootstrap to style the form and its controls.
     <div class="form-group">
-        @Html.Label("Name")
-        @Html.TextBoxFor(m => m.MemberName, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Member.MemberName)
+        @Html.TextBoxFor(m => m.Member.MemberName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Member.AccountTypeId)
+        @Html.DropDownListFor(m => m.Member.AccountTypeId, new SelectList(Model.AccountTypes, "Id", "Name"), "Select Account Type", new { @class = "form-control" })
     </div>
     //go to getbootstrap.com to find the class name for checkbox
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(m => m.IsSubscribedToNewsLetter) Subscribed to Newsletter?
+            @Html.CheckBoxFor(m => m.Member.IsSubscribedToNewsLetter) Subscribed to Newsletter?
         </label>
     </div>
+
 }
 

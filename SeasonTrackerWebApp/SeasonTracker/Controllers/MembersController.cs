@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using SeasonTracker.Models;
+using SeasonTracker.ViewModels;
 
 namespace SeasonTracker.Controllers
 {
@@ -26,9 +27,21 @@ namespace SeasonTracker.Controllers
         {
             _context.Dispose();
         }
+
+        //Display the 'New' member account form with a list of the account types
         public ActionResult New()
         {
-            return View();
+            //First get the list of the account types
+            var accountTypes = _context.AccountTypes.ToList();
+
+            //Use a View Model that encapsulates all of the data required for this view
+            var viewModel = new NewMemberViewModel
+            {
+                //Set the list of accountTypes to the view models' AccountTypes property
+                AccountTypes = accountTypes
+            };
+
+            return View(viewModel);
         }
 
         // GET: Members
