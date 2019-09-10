@@ -28,20 +28,35 @@ namespace SeasonTracker.Controllers
             _context.Dispose();
         }
 
-        //Display the 'New' member account form with a list of the account types
+        //Display the member form with a list of the account types
         public ActionResult New()
         {
             //First get the list of the account types
             var accountTypes = _context.AccountTypes.ToList();
 
             //Use a View Model that encapsulates all of the data required for this view
-            var viewModel = new NewMemberViewModel
+            var viewModel = new MemberFormViewModel
             {
                 //Set the list of accountTypes to the view models' AccountTypes property
                 AccountTypes = accountTypes
             };
 
-            return View(viewModel);
+            return View("CustomerForm", viewModel);
+        }
+
+        //Define the 'Create' action for Member. This is model binding. MVC framework binds
+        //this model to the request data.
+        //Here we are saving/persiting data to the database.
+        public ActionResult Create(Member member)
+        {
+            //To save the data to the database, we need to create a context to it.
+            _context.Members.Add(member);
+
+            //Persist the changes. This creates SQL statements at runtime, within a transaction.
+            _context.SaveChanges();
+
+            //Now redirect the customer to the Customers page "Index"
+            return RedirectToAction("Index", "Members");
         }
 
         // GET: Members
@@ -72,6 +87,26 @@ namespace SeasonTracker.Controllers
 
             //A view is rendered for a specific user
             return View(member);
+        }
+
+        //This displays the MemberForm for editing
+        public ActionResult Edit(int id)
+        {
+            //First we need to get this member with the member id from the database.
+            //If the member with the given id exists it will be returned, otherwise null.
+            var member = _context.Members.SingleOrDefault(c => c.Id == id);
+
+            if (member == null)
+                return HttpNotFound();
+
+            //New we need to render the new customer form, which is based on the View Model, and specify the 
+            //view name.
+            var viewModel = new MemberFormViewModel
+            {
+                Member = member,
+                AccountTypes = _context.AccountTypes.ToList()
+            };
+            return View("MemberForm", viewModel);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SeasonTracker.ViewModels
     //In this view model, we are encapsulating all of the data required for 
     //displaying data within the New Member View.
     //This ViewModel needs to exist in order to pass a view object within MembersController
-    public class NewMemberViewModel
+    public class MemberFormViewModel
     {
         //List of account types
         public IEnumerable<AccountType> AccountTypes { get; set; }
