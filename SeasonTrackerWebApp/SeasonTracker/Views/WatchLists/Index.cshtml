@@ -1,6 +1,8 @@
-﻿@model IEnumerable<SeasonTracker.Models.Member>
+﻿
+@model IEnumerable<SeasonTracker.Models.WatchList>
+
 @*
-    Note: I've set the model for this view to IEnumerable<Customer>.
+    Note: I've set the model for this view to IEnumerable<WatchList>.
     This is a simple interface implemented by the list class. Since
     in this view we only want to iterate over this list, and we don't
     need any of the operations in the List class (eg Add, Remove, etc),
@@ -11,17 +13,14 @@
 *@
 
 @{
-    ViewBag.Title = "Members";
+    ViewBag.Title = "Watch Lists";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Members</h2>
-<p>
-    @Html.ActionLink("New Member", "New", "Members", null, new { @class = "btn btn-primary" })
-</p>
+<h2>Watch Lists</h2>
 @if (!Model.Any())
 {
-    <p>We don't have any members yet.</p>
+    <p>We don't have any watch lists yet.</p>
 }
 else
 {
@@ -29,22 +28,21 @@ else
         <thead>
             <tr>
                 @*These are the table headings*@
-                <th>Member Names</th>
-                <th>Watch List</th>
-                <th>Account Type</th>
+                <th>Member Id</th>
+                <th>Tv Show ID</th>
+                <th>Viewing List</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var member in Model)
+            @foreach (var watchList in Model)
             {
                 <tr>
                     @*This is the content which fits under each table heading*@
-                    <td>@Html.ActionLink(member.MemberName, "Edit", "Members", new { id = member.Id }, null)</td>
-                    <td>@Html.ActionLink("Tv Shows", "Edit", "WatchLists", new { id = member.Id }, null)</td>
-                    <td>@member.AccountType.Name</td>
+                    <td>@watchList.MemberId</td>
+                    <td>@watchList.TvShowId</td>
+                    <td>@watchList.ViewingList</td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
