@@ -7,7 +7,7 @@
 <h2>New Member</h2>
 
 @*This creates a "form" block*@
-@using (Html.BeginForm("Create", "Members"))
+@using (Html.BeginForm("Save", "Members"))
 {
     //There is special markup that we need to use here that is used
     //by Bootstrap to render dynamic forms. The classes defined here are
@@ -26,6 +26,9 @@
             @Html.CheckBoxFor(m => m.Member.IsSubscribedToNewsLetter) Subscribed to Newsletter?
         </label>
     </div>
+    //Because the properties in this form relies on the Id in order to save to the database, we
+    //need to make this field hidden. This is an arbitrary place for it, just cleaner to put it here.
+    @Html.HiddenFor(m => m.Member.Id)
     //go to getbootstrap.com to find the class name for button
     <button type="submit" class="btn btn-primary">Save</button>
 

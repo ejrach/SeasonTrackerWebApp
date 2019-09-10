@@ -47,10 +47,23 @@ namespace SeasonTracker.Controllers
         //Define the 'Create' action for Member. This is model binding. MVC framework binds
         //this model to the request data.
         //Here we are saving/persiting data to the database.
-        public ActionResult Create(Member member)
+        public ActionResult Save(Member member)
         {
-            //To save the data to the database, we need to create a context to it.
-            _context.Members.Add(member);
+            //if the customer Id is 0, then we have a new customer
+            if (member.Id == 0)
+                //To save the data to the database, we need to create a context to it.
+                _context.Members.Add(member);
+            else
+            {
+                //Using the Single method here because if the given member is not found, 
+                //we want to throw an exception. This action should only be called anyways because of posting
+                //the customer form.
+                var memberInDb = _context.Members.Single(m => m.Id == member.Id);
+
+                memberInDb.MemberName = member.MemberName;
+                memberInDb.AccountTypeId = member.AccountTypeId;
+                memberInDb.IsSubscribedToNewsLetter = member.IsSubscribedToNewsLetter;
+            }
 
             //Persist the changes. This creates SQL statements at runtime, within a transaction.
             _context.SaveChanges();
