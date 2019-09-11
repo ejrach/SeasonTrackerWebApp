@@ -12,14 +12,16 @@ namespace SeasonTracker.ViewModels
     //
     // This view will display, the members' name, the TvShows they are watching and the 
     // corresponding watchlists
-    public class MemberWatchListViewModel
+    public class WatchListViewModel
     {
         public int Id { get; set; }
 
         public string MemberName { get; set; }
 
+        //Because the view that uses this model will display a list of the TvShows 
         public List<TvShow> TvShows { get; set; }
 
+        //Because the view that uses this model will display a list of the WatchLists 
         public List<WatchList> WatchLists { get; set; }
     }
 }

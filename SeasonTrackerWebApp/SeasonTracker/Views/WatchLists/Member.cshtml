@@ -1,11 +1,14 @@
-﻿@model  SeasonTracker.ViewModels.MemberWatchListViewModel
+﻿@model  SeasonTracker.ViewModels.WatchListViewModel
 @{
-    ViewBag.Title = "Viewing Details";
+    ViewBag.Title = "Watchlists - " + @Model.MemberName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*Display the member name*@
+@*Display the member name and the TV Shows they are subscribed to*@
 <h2>@Model.MemberName</h2>
+<p>
+    @Html.ActionLink("Add New Show", "New", "TvShows", null, new { @class = "btn btn-primary" })
+</p>
 @if (Model.TvShows == null)
 {
     <p>No watchlists to display.</p>
@@ -19,16 +22,18 @@ else
                 <th>Season Number</th>
                 <th>Number of Episodes</th>
                 <th>Viewing List</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.WatchLists)
             {
                 <tr>
-                    <td>@item.TvShow.TvShowName</td>
+                    <td>@Html.ActionLink(@item.TvShow.TvShowName, "Edit", "WatchLists", new { id = item.Id }, null)</td>
                     <td>@item.TvShow.SeasonNumber</td>
                     <td>@item.TvShow.NumberOfEpisodes</td>
                     <td>@item.ViewingList</td>
+                    <td>Delete</td>
                 </tr>
             }
         </tbody>

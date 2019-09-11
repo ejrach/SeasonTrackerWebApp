@@ -30,6 +30,7 @@ else
             <tr>
                 @*These are the table headings*@
                 <th>Member Names</th>
+                <th>Member Details</th>
                 <th>Watch Lists</th>
                 <th>Account Type</th>
             </tr>
@@ -39,8 +40,9 @@ else
             {
                 <tr>
                     @*This is the content which fits under each table heading*@
-                    <td>@Html.ActionLink(member.MemberName, "Edit", "Members", new { id = member.Id }, null)</td>
-                    <td>@Html.ActionLink("Details", "Member", "WatchLists", new { id = member.Id }, null)</td>
+                    <td>@member.MemberName</td>
+                    <td>@Html.ActionLink("Edit", "Edit", "Members", new { id = member.Id }, null)</td>
+                    <td>@Html.ActionLink("View", "Member", "WatchLists", new { id = member.Id }, null)</td>
                     <td>@member.AccountType.Name</td>
                 </tr>
             }

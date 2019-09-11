@@ -23,18 +23,24 @@
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
+            <th>Add to List</th>
             <th>Tv Show Name</th>
             <th>Season Number</th>
             <th>Number of Episodes</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var tvShow in Model)
         {
             <tr>
-                <td>@Html.ActionLink(tvShow.TvShowName, "Edit", "TvShows", new { id = tvShow.Id }, null)</td>
+                <td>Add</td>
+                <td>@tvShow.TvShowName</td>
                 <td>@tvShow.SeasonNumber</td>
                 <td>@tvShow.NumberOfEpisodes</td>
+                <td>@Html.ActionLink("Edit", "Edit", "TvShows", new { id = tvShow.Id }, null)</td>
+                <td>Delete</td>
             </tr>
         }
     </tbody>
