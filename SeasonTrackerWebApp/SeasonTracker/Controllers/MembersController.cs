@@ -103,6 +103,7 @@ namespace SeasonTracker.Controllers
             return View(member);
         }
 
+        //Passing id as a parameter, represents the Member Id
         public ActionResult ViewingDetails(int? id)
         {
             if (id == null)
@@ -119,7 +120,8 @@ namespace SeasonTracker.Controllers
             var viewModel = new MemberWatchListViewModel
             {
                 Id = member.Id,
-                Name = member.MemberName,
+                MemberName = member.MemberName,
+                TvShows = member.TvShows.ToList(),
                 WatchLists = member.WatchLists.ToList()
             };
 

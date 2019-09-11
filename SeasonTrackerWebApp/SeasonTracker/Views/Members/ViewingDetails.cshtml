@@ -6,10 +6,12 @@
 
 <h2>ViewingDetails</h2>
 
-<h2>@Model.Name</h2>
+<h2>@Model.MemberName</h2>
 <ul>
+    @*for each *@
     @foreach (var item in Model.WatchLists)
     {
+        <li>@item.TvShow.TvShowName @item.TvShow.SeasonNumber</li>
         <li>@item.ViewingList</li>
     }
 

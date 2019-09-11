@@ -28,6 +28,10 @@ namespace SeasonTracker.Models
         [Display(Name = "Account Type")]
         public byte AccountTypeId { get; set; }
 
+        //Each member can have a collection of TvShows they are watching
+        public virtual ICollection<TvShow> TvShows { get; set; }
+
+        //Each member can have a collection of WatchLists to display
         public virtual ICollection<WatchList> WatchLists { get; set; }
 
     }

@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201909102306406_UpdateWatchlistModel.Designer.cs">
       <DependentUpon>201909102306406_UpdateWatchlistModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909111519510_AddTvShowToMemberWatchListViewModel.cs" />
+    <Compile Include="Migrations\201909111519510_AddTvShowToMemberWatchListViewModel.Designer.cs">
+      <DependentUpon>201909111519510_AddTvShowToMemberWatchListViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -367,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909102306406_UpdateWatchlistModel.resx">
       <DependentUpon>201909102306406_UpdateWatchlistModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909111519510_AddTvShowToMemberWatchListViewModel.resx">
+      <DependentUpon>201909111519510_AddTvShowToMemberWatchListViewModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
