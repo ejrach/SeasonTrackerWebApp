@@ -52,7 +52,7 @@ namespace SeasonTracker.Controllers
             var viewModel = new WatchListViewModel
             {
                 Id = member.Id,
-                MemberName = member.MemberName,
+                Member = member,
                 TvShows = member.TvShows.ToList(),
                 WatchLists = member.WatchLists.ToList()
             };
@@ -103,5 +103,66 @@ namespace SeasonTracker.Controllers
             return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
         }
 
+        //Passing id as a parameter, represents the member Id so the user can add a tv show to their list
+        public ActionResult Add(int id)
+        //public ActionResult Add()
+        {
+            //First we need to get this member with the member id from the database.
+            //If the member with the given id exists it will be returned, otherwise null.
+            var member = _context.Members.SingleOrDefault(c => c.Id == id);
+            var tvShows = _context.TvShows.ToList();
+
+            if (tvShows == null || member == null)
+                return HttpNotFound();
+
+            //Now we need to render the watchlist add form, which is based on the View Model, and specify the 
+            //view name.
+            var viewModel = new WatchListAddViewModel
+            {
+                TvShows = tvShows,
+                Member = member
+                //TvShows = TvShows.ToList()
+            };
+            return View(viewModel);
+        }
+
+        //Define the 'Update' action for Member. This is model binding. MVC framework binds
+        //this model to the request data.
+        //Here we are saving/persiting data to the database.
+        //[HttpPost]
+        public ActionResult Update(WatchList watchList)
+        {
+            //TBD - NEED TO FIX - NOT WORKING
+
+
+
+        //    //if the watchList Id is 0, then we have a new watchlist
+        //    //if (watchList.Id == 0)
+        //    //{   
+        //    //    //To save the data to the database, we need to create a context to it.
+        //    //    //_context.Members.Add(member);
+
+        //    //    _context.WatchLists.Add(watchList);
+        //    //}
+                
+        //    //else
+        //    //{
+        //        //Using the Single method here because if the given watchlist is not found, 
+        //        //we want to throw an exception. This action should only be called anyways because of posting
+        //        //the watchlist form.
+        //        var watchListInDb = _context.WatchLists.Single(m => m.Id == m.Id);
+
+
+        //        watchListInDb.MemberId = watchList.MemberId;
+        //        watchListInDb.TvShowId = watchList.TvShowId;
+        //        watchListInDb.ViewingList = "TBD";
+        //    //}
+
+        //    //Persist the changes. This creates SQL statements at runtime, within a transaction.
+        //    _context.SaveChanges();
+
+        //    //Now redirect the members to the members page "Index"
+            return RedirectToAction("Index", "WatchLists");
+        }
     }
 }

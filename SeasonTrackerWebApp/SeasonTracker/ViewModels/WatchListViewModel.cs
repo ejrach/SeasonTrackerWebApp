@@ -16,7 +16,9 @@ namespace SeasonTracker.ViewModels
     {
         public int Id { get; set; }
 
-        public string MemberName { get; set; }
+        //public string MemberName { get; set; }
+        //public int MemberId { get; set; }
+        public Member Member { get; set; }
 
         //Because the view that uses this model will display a list of the TvShows 
         public List<TvShow> TvShows { get; set; }

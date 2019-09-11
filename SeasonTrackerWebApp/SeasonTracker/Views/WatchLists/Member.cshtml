@@ -1,13 +1,13 @@
 ﻿@model  SeasonTracker.ViewModels.WatchListViewModel
 @{
-    ViewBag.Title = "Watchlists - " + @Model.MemberName;
+    ViewBag.Title = "Watchlists";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @*Display the member name and the TV Shows they are subscribed to*@
-<h2>@Model.MemberName</h2>
+<h2>@Model.Member.MemberName</h2>
 <p>
-    @Html.ActionLink("Add New Show", "New", "TvShows", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add", "Add", "WatchLists", new { id = Model.Member.Id}, new { @class = "btn btn-primary" })
 </p>
 @if (Model.TvShows == null)
 {
