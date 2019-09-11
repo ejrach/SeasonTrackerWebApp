@@ -1,18 +1,37 @@
 ﻿@model  SeasonTracker.ViewModels.MemberWatchListViewModel
 @{
-    ViewBag.Title = "ViewingDetails";
+    ViewBag.Title = "Viewing Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ViewingDetails</h2>
-
+@*Display the member name*@
 <h2>@Model.MemberName</h2>
-<ul>
-    @*for each *@
-    @foreach (var item in Model.WatchLists)
-    {
-        <li>@item.TvShow.TvShowName @item.TvShow.SeasonNumber</li>
-        <li>@item.ViewingList</li>
-    }
+@if (Model.TvShows == null)
+{
+    <p>No watchlists to display.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Tv Show Name</th>
+                <th>Season Number</th>
+                <th>Number of Episodes</th>
+                <th>Viewing List</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.WatchLists)
+            {
+                <tr>
+                    <td>@item.TvShow.TvShowName</td>
+                    <td>@item.TvShow.SeasonNumber</td>
+                    <td>@item.TvShow.NumberOfEpisodes</td>
+                    <td>@item.ViewingList</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-</ul>
