@@ -144,6 +144,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TvShowsController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\WatchListsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -290,7 +291,8 @@
     <Content Include="Views\Members\MemberForm.cshtml" />
     <Content Include="Views\TvShows\TvShowForm.cshtml" />
     <Content Include="Views\TvShows\Details.cshtml" />
-    <Content Include="Views\Members\ViewingDetails.cshtml" />
+    <Content Include="Views\WatchLists\Member.cshtml" />
+    <Content Include="Views\WatchLists\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

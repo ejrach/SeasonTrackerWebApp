@@ -103,30 +103,30 @@ namespace SeasonTracker.Controllers
             return View(member);
         }
 
-        //Passing id as a parameter, represents the Member Id
-        public ActionResult ViewingDetails(int? id)
-        {
-            if (id == null)
-                return HttpNotFound();
+        ////Passing id as a parameter, represents the Member Id
+        //public ActionResult ViewingDetails(int? id)
+        //{
+        //    if (id == null)
+        //        return HttpNotFound();
 
-            Member member = _context.Members
-                .Include(m => m.WatchLists)
-                .Where(m => m.Id == id)
-                .SingleOrDefault();
+        //    Member member = _context.Members
+        //        .Include(m => m.WatchLists)
+        //        .Where(m => m.Id == id)
+        //        .SingleOrDefault();
 
-            if (member == null)
-                return HttpNotFound();
+        //    if (member == null)
+        //        return HttpNotFound();
 
-            var viewModel = new MemberWatchListViewModel
-            {
-                Id = member.Id,
-                MemberName = member.MemberName,
-                TvShows = member.TvShows.ToList(),
-                WatchLists = member.WatchLists.ToList()
-            };
+        //    var viewModel = new MemberWatchListViewModel
+        //    {
+        //        Id = member.Id,
+        //        MemberName = member.MemberName,
+        //        TvShows = member.TvShows.ToList(),
+        //        WatchLists = member.WatchLists.ToList()
+        //    };
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
         //This displays the MemberForm for editing
         public ActionResult Edit(int id)

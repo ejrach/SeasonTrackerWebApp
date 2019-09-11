@@ -40,7 +40,7 @@ else
                 <tr>
                     @*This is the content which fits under each table heading*@
                     <td>@Html.ActionLink(member.MemberName, "Edit", "Members", new { id = member.Id }, null)</td>
-                    <td>@Html.ActionLink("Details", "ViewingDetails", "Members", new { id = member.Id }, null)</td>
+                    <td>@Html.ActionLink("Details", "Member", "WatchLists", new { id = member.Id }, null)</td>
                     <td>@member.AccountType.Name</td>
                 </tr>
             }

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SeasonTracker.Models.WatchList>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (!Model.Any())
+{
+    <p>We don't have any watch lists yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Member Name</th>
+                <th>Tv Show Name</th>
+                <th>Season Number</th>
+                <th>Number of Episodes</th>
+                <th>Viewing List</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@item.Member.MemberName, "Member", "WatchLists", new { id = item.MemberId }, null)</td>
+                    <td>@item.TvShow.TvShowName</td>
+                    <td>@item.TvShow.SeasonNumber</td>
+                    <td>@item.TvShow.NumberOfEpisodes</td>
+                    <td>@item.ViewingList</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
