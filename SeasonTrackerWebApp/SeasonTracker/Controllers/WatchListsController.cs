@@ -129,23 +129,21 @@ namespace SeasonTracker.Controllers
         [Route("watchlists/add/{mId}/{tId}")]
         public ActionResult AddNewWatchList(int mId, int tId)
         {
+            //var watchListInDb = _context.WatchLists.Single(m => m.Id == );
+            var watchListInDb = new WatchList
+            {
+                MemberId = mId,
+                TvShowId = tId,
+                ViewingList = "TBD"
+            };
 
-            //TODO: Implement adding this information to the database. Here we can initialize the 
-            //      watchlist.
+            _context.WatchLists.Add(watchListInDb);
 
-            //Using the Single method here because if the given watchlist is not found, 
-            //we want to throw an exception. This action should only be called anyways because of posting
-            //the watchlist edit form.
-            var watchListInDb = "hello";//_context.WatchLists.Single(w => w.Id == watchList.Id);
-
-            //watchListInDb.ViewingList = watchList.ViewingList;
-
-            ////Persist the changes. This creates SQL statements at runtime, within a transaction.
-            //_context.SaveChanges();
+            //Persist the changes. This creates SQL statements at runtime, within a transaction.
+            _context.SaveChanges();
 
             //Now redirect the members to the members page "Index"
-            //return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
-            return RedirectToAction("Index");
+            return RedirectToAction("Member/" + mId, "WatchLists");
         }
     }
 }
