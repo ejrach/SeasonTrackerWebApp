@@ -17,6 +17,7 @@ namespace SeasonTracker.ViewModels
         //Let's reuse the Member model
         public Member Member { get; set; }
 
+        //A derived property. Used for Viewbag title
         public string Title
         {
             get

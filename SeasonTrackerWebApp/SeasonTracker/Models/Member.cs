@@ -23,10 +23,16 @@ namespace SeasonTracker.Models
 
         public bool IsSubscribedToNewsLetter { get; set; }
 
-        public AccountType AccountType { get; set; }
-
         [Display(Name = "Account Type")]
         public byte AccountTypeId { get; set; }
+
+
+        /*
+         * 
+         * Model References
+         * 
+         */
+        public AccountType AccountType { get; set; }
 
         //Each member can have a collection of TvShows they are watching
         public virtual ICollection<TvShow> TvShows { get; set; }

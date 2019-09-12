@@ -14,6 +14,7 @@ namespace SeasonTracker.ViewModels
         //Let's reuse the TvShow model
         public TvShow TvShow { get; set; }
 
+        //A derived property. Used for Viewbag title
         public string Title
         {
             get

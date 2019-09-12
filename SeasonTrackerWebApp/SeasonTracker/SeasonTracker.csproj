@@ -244,7 +244,6 @@
     <Compile Include="Models\WatchList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MemberFormViewModel.cs" />
-    <Compile Include="ViewModels\WatchListAddViewModel.cs" />
     <Compile Include="ViewModels\WatchListFormViewModel.cs" />
     <Compile Include="ViewModels\WatchListViewModel.cs" />
     <Compile Include="ViewModels\TvShowFormViewModel.cs" />
@@ -296,7 +295,6 @@
     <Content Include="Views\WatchLists\Member.cshtml" />
     <Content Include="Views\WatchLists\Index.cshtml" />
     <Content Include="Views\WatchLists\Edit.cshtml" />
-    <Content Include="Views\WatchLists\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

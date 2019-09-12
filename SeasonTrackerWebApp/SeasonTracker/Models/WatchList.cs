@@ -14,7 +14,14 @@ namespace SeasonTracker.Models
 
         public int TvShowId { get; set; }
 
+        [Display(Name = "Episode Viewing List")]
         public string ViewingList { get; set; }
+
+        /*
+         * 
+         * Model References
+         * 
+         */
 
         //Need the Member model defined here as property, since a Members' Id is defined
         //as part of the WatchList model. The Member Id is stored in the WatchList DbSet.

@@ -6,6 +6,10 @@ using SeasonTracker.Models;
 
 namespace SeasonTracker.ViewModels
 {
+    /*
+     * This View Model used in
+     *      Viewing the editing the watch list 
+     */
     public class WatchListFormViewModel
     {
         //For this View Model, we simply want access to the Viewing List within WatchList,
@@ -17,15 +21,5 @@ namespace SeasonTracker.ViewModels
         
         //Let's reuse the TvShow model
         public TvShow TvShow { get; set; }
-
-        //public string Title
-        //{
-        //    get
-        //    {
-        //        if (WatchList != null && WatchList.Id != 0)
-        //            return "Edit Watch List";
-        //        return "Blank Watch List";
-        //    }
-        //}
     }
 }
