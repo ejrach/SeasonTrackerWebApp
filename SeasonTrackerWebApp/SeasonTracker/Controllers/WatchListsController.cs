@@ -126,10 +126,13 @@ namespace SeasonTracker.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
         [Route("watchlists/add/{mId}/{tId}")]
         public ActionResult AddNewWatchList(int mId, int tId)
         {
+
+            //TODO: Implement adding this information to the database. Here we can initialize the 
+            //      watchlist.
+
             //Using the Single method here because if the given watchlist is not found, 
             //we want to throw an exception. This action should only be called anyways because of posting
             //the watchlist edit form.

@@ -15,7 +15,11 @@ namespace SeasonTracker
 
             //This was added for removing complexity of having too many custom attribute routing.
             routes.MapMvcAttributeRoutes();
-            
+            //routes.MapRoute(
+            //    "AddWatchlistToMember",
+            //    "watchlists/member/{mId}/{tId}",
+            //    new { controller = "WatchLists", action = "AddNewWatchList" });
+
 
             routes.MapRoute(
                 name: "Default",
