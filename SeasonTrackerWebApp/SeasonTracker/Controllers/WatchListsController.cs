@@ -104,5 +104,45 @@ namespace SeasonTracker.Controllers
             //Now redirect the members to the members page "Index"
             return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
         }
+
+        //Passing id as a parameter, represents the member Id so the user can add a new tv 
+        //show to their Tv Show watchlist
+        public ActionResult Add(int id)
+        {
+            //First we need to get the Tv Shows and member from the database.
+            var tvShows = _context.TvShows.ToList();
+            var member = _context.Members.SingleOrDefault(m => m.Id == id);
+
+            if (tvShows == null || member == null)
+                return HttpNotFound();
+
+            //Now we need to render the watch list edit form, which is based on the Model, and specify the 
+            //view name.
+            var viewModel = new TvShowSelectionViewModel
+            {
+                TvShows = tvShows,
+                Member = member
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("watchlists/add/{mId}/{tId}")]
+        public ActionResult AddNewWatchList(int mId, int tId)
+        {
+            //Using the Single method here because if the given watchlist is not found, 
+            //we want to throw an exception. This action should only be called anyways because of posting
+            //the watchlist edit form.
+            var watchListInDb = "hello";//_context.WatchLists.Single(w => w.Id == watchList.Id);
+
+            //watchListInDb.ViewingList = watchList.ViewingList;
+
+            ////Persist the changes. This creates SQL statements at runtime, within a transaction.
+            //_context.SaveChanges();
+
+            //Now redirect the members to the members page "Index"
+            //return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -1,0 +1,26 @@
+﻿@model  SeasonTracker.ViewModels.TvShowSelectionViewModel
+@{
+    ViewBag.Title = "Add a Tv Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*Display the member name and the TV Shows they are subscribed to*@
+<h2>Add a new Tv Show to your list, @Model.Member.MemberName</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Add</th>
+            <th>Tv Show</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TvShows)
+        {
+            <tr>
+                <td>@Html.ActionLink("Add", "AddNewWatchList", "WatchLists", new { mId = Model.Member.Id, tId = item.Id }, null)</td>
+                <td>@item.TvShowName: Season @item.SeasonNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

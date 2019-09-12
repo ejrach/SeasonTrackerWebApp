@@ -13,8 +13,9 @@ namespace SeasonTracker
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //TBD: This was added for ...
+            //This was added for removing complexity of having too many custom attribute routing.
             routes.MapMvcAttributeRoutes();
+            
 
             routes.MapRoute(
                 name: "Default",

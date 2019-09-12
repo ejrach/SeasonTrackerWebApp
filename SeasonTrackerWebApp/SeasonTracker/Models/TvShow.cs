@@ -16,6 +16,5 @@ namespace SeasonTracker.Models
         public byte SeasonNumber { get; set; }
         [Required]
         public byte NumberOfEpisodes { get; set; }
-
     }
 }
