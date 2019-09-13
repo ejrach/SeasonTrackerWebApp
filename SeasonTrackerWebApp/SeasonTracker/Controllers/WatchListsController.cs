@@ -129,14 +129,21 @@ namespace SeasonTracker.Controllers
         [Route("watchlists/add/{mId}/{tId}")]
         public ActionResult AddNewWatchList(int mId, int tId)
         {
-            //var watchListInDb = _context.WatchLists.Single(m => m.Id == );
+            //Return the tv show record from the database associated with the Tv Show Id
+            var tvShow = _context.TvShows.Single(t => t.Id == tId);
+
+            //get the number of episodes from the record
+            string viewingList = InitializeEpisodes(tvShow.NumberOfEpisodes);
+
+            //Define a new watchlist record
             var watchListInDb = new WatchList
             {
                 MemberId = mId,
                 TvShowId = tId,
-                ViewingList = "TBD"
+                ViewingList = viewingList
             };
-
+           
+            //Add a new watchlist record to the database
             _context.WatchLists.Add(watchListInDb);
 
             //Persist the changes. This creates SQL statements at runtime, within a transaction.
@@ -144,6 +151,11 @@ namespace SeasonTracker.Controllers
 
             //Now redirect the members to the members page "Index"
             return RedirectToAction("Member/" + mId, "WatchLists");
+        }
+
+        private string InitializeEpisodes(byte numberOfEpisodes)
+        {
+            return new string('N',numberOfEpisodes);
         }
     }
 }
