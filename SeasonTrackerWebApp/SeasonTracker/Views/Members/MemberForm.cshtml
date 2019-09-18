@@ -38,6 +38,15 @@
     @Html.HiddenFor(m => m.Member.Id)
     //go to getbootstrap.com to find the class name for button
     <button type="submit" class="btn btn-primary">Save</button>
+}
 
+@*Added for client side validation of the fields in this form. This is not enabled by default,
+    but you can pull in the path from 'BundleConfig' so that validation comes from the client side,
+    not the server side. This is a good practice in situations like this so we don't wait for the
+    server to come back and tell us that we didn't fill out the Name text box, for example.
+*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
