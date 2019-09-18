@@ -88,9 +88,9 @@ namespace SeasonTracker.Controllers
         //this model to the request data.
         //Here we are saving/persiting data to the database.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(WatchList watchList)
         {
-            
             //Using the Single method here because if the given watchlist is not found, 
             //we want to throw an exception. This action should only be called anyways because of posting
             //the watchlist edit form.

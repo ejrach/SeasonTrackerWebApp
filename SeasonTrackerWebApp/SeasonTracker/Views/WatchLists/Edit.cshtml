@@ -15,11 +15,28 @@
     <div class="form-group">
         @Html.LabelFor(m => m.WatchList.ViewingList)
         @Html.TextBoxFor(m => m.WatchList.ViewingList, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.WatchList.ViewingList)
     </div>
     //Because the properties in this form relies on the Id in order to save to the database, we
     //need to make this field hidden. This is an arbitrary place for it, just cleaner to put it here.
-    //@Html.HiddenFor(m => m.Id)
-    //go to getbootstrap.com to find the class name for button
     @Html.HiddenFor(m => m.WatchList.Id)
+    //This creates a token and then puts it in this form as a hidden field and also as a cookie on the users computer.
+    //This prevents a hacker from gaining access to the form data and sending a request on behalf of the user. This
+    //token can be viewed in the inspect window for the form and needs to match with the token contained in the cookie
+    //which can be viewed from Chrome inspect/Application/Cookies/localhost
+    @Html.AntiForgeryToken()
+    //go to getbootstrap.com to find the class name for button
     <button type="submit" class="btn btn-primary">Save</button>
+}
+@*Added for client side validation of the fields in this form. This is not enabled by default,
+    but you can pull in the path from 'BundleConfig' so that validation comes from the client side,
+    not the server side. This is a good practice in situations like this so we don't wait for the
+    server to come back and tell us that we didn't fill out the Name text box, for example.
+
+    Note: if client side validation is enabled (like below), ValidationSummary will not work. That is a
+            server side summary.
+*@
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }

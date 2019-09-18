@@ -22,7 +22,6 @@ namespace SeasonTracker.Models
          * Model References
          * 
          */
-
         //Need the Member model defined here as property, since a Members' Id is defined
         //as part of the WatchList model. The Member Id is stored in the WatchList DbSet.
         public virtual Member Member { get; set; }

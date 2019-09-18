@@ -70,9 +70,10 @@ namespace SeasonTracker.Controllers
 
             //New we need to render the tv show edit form, which is based on the View Model, and specify the 
             //view name.
-            var viewModel = new TvShowFormViewModel
+            var viewModel = new TvShowFormViewModel(tvShow)
             {
-                TvShow = tvShow,
+                //Left empty on purpose. We do not need to return anything from the database back 
+                //to the form (like we do for the MemberForm retrieving Account Types) 
             };
             return View("TvShowForm", viewModel);
         }
@@ -81,8 +82,26 @@ namespace SeasonTracker.Controllers
         //this model to the request data.
         //Here we are saving/persiting data to the database.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(TvShow tvShow)
         {
+            //Use modelstate property to get access to validatation data.
+            //Since we are requiring specific properties in the TvShow model,
+            //we want to return the TvShowForm if fields are empty. So need 
+            //to define the viewModel and return the form.
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new TvShowFormViewModel(tvShow)
+                {
+                    //Left empty on purpose. We do not need to return anything from the database back 
+                    //to the form (like we do for the MemberForm retrieving Account Types)
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
+
+
             //if the tv show Id is 0, then we have a new tv show
             if (tvShow.Id == 0)
                 //To save the data to the database, we need to create a context to it.
