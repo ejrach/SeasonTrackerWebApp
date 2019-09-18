@@ -37,6 +37,8 @@ namespace SeasonTracker.Controllers
             //Use a View Model that encapsulates all of the data required for this view
             var viewModel = new MemberFormViewModel
             {
+                //On a new member, create a member object so the Id gets initialized in the form.
+                Member = new Member(),
                 //Set the list of accountTypes to the view models' AccountTypes property
                 AccountTypes = accountTypes
             };
