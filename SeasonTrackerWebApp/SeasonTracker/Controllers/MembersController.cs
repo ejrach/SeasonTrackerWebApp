@@ -50,6 +50,22 @@ namespace SeasonTracker.Controllers
         [HttpPost]
         public ActionResult Save(Member member)
         {
+            //Use modelstate property to get access to validatation data.
+            //Since we are requiring the Name property of Member model,
+            //we want to return the MemberForm if the field is empty. So need 
+            //to define the viewModel and return the form.
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MemberFormViewModel
+                {
+                    Member = member,
+                    AccountTypes = _context.AccountTypes.ToList()
+
+                };
+
+                return View("MemberForm", viewModel);
+            }
+
             //if the member Id is 0, then we have a new member
             if (member.Id == 0)
                 //To save the data to the database, we need to create a context to it.

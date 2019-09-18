@@ -15,8 +15,9 @@ namespace SeasonTracker.Models
         public int Id { get; set; }
 
         //Apply data annotation for the HTML markup for the "MemberName" property.
-        //This can be changed to whatever you want displayed wherever you you use MemberName
-        [Required]
+        //This can be changed to whatever you want displayed wherever you you use MemberName.
+        //Data Annotations. Override error message on input validation error.
+        [Required(ErrorMessage = "Please enter your name.")]
         [StringLength(255)]
         [Display(Name = "Member Name")]
         public string MemberName { get; set; }
