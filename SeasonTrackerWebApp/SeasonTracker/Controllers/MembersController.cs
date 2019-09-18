@@ -50,6 +50,7 @@ namespace SeasonTracker.Controllers
         //this model to the request data.
         //Here we are saving/persiting data to the database.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Member member)
         {
             //Use modelstate property to get access to validatation data.

@@ -33,9 +33,15 @@
             @Html.CheckBoxFor(m => m.Member.IsSubscribedToNewsLetter) Subscribed to Newsletter?
         </label>
     </div>
+    //Helper Methods
     //Because the properties in this form relies on the Id in order to save to the database, we
     //need to make this field hidden. This is an arbitrary place for it, just cleaner to put it here.
     @Html.HiddenFor(m => m.Member.Id)
+    //This creates a token and then puts it in this form as a hidden field and also as a cookie on the users computer.
+    //This prevents a hacker from gaining access to the form data and sending a request on behalf of the user. This
+    //token can be viewed in the inspect window for the form and needs to match with the token contained in the cookie
+    //which can be viewed from Chrome inspect/Application/Cookies/localhost
+    @Html.AntiForgeryToken()
     //go to getbootstrap.com to find the class name for button
     <button type="submit" class="btn btn-primary">Save</button>
 }
