@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 using System.Web.Http;
 using SeasonTracker.Models;
 using SeasonTracker.Dtos;
@@ -24,7 +25,9 @@ namespace SeasonTracker.Controllers.Api
         // GET /api/tvshows
         public IHttpActionResult GetTvShows()
         {
-            var tvShowDtos = _context.TvShows.ToList().Select(Mapper.Map<TvShow, TvShowDto>);
+            var tvShowDtos = _context.TvShows
+                .ToList()
+                .Select(Mapper.Map<TvShow, TvShowDto>);
 
             return Ok(tvShowDtos);
         }

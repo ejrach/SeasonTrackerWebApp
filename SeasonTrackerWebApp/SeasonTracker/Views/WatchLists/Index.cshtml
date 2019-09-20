@@ -6,33 +6,72 @@
 
 <h2>All Watchlists</h2>
 
-@if (!Model.Any())
+<table id="watchLists-table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+
+            <th>Member Name</th>
+            <th>Tv Show Name</th>
+            <th>Season Number</th>
+            <th>Number of Episodes</th>
+            <th>Viewing List</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
 {
-    <p>We don't have any watch lists yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Member Name</th>
-                <th>Tv Show Name</th>
-                <th>Season Number</th>
-                <th>Number of Episodes</th>
-                <th>Viewing List</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(@item.Member.MemberName, "Member", "WatchLists", new { id = item.MemberId }, null)</td>
-                    <td>@item.TvShow.TvShowName</td>
-                    <td>@item.TvShow.SeasonNumber</td>
-                    <td>@item.TvShow.NumberOfEpisodes</td>
-                    <td>@item.ViewingList</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <script>
+        $(document).ready(function () {
+            var table = $("#watchLists-table").DataTable({
+                ajax: {
+                    url: "/api/watchLists",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "member.memberName"
+                    },
+                    {
+                        data: "tvShow.tvShowName"
+                    },
+                    {
+                        data: "tvShow.seasonNumber"
+                    },
+                    {
+                        data: "tvShow.numberOfEpisodes"
+                    },
+                    {
+                        data: "viewingList",
+                        render: function (data, type, watchList) {
+                            return "<a href='/watchlists/edit/" + watchList.id + "'>" + watchList.viewingList + "</a>";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-watchlist-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+            $("#watchLists-table").on("click", ".js-delete", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this watch list?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/watchLists/" + button.attr("data-watchlist-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 }

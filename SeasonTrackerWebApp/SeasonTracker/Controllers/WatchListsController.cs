@@ -29,9 +29,7 @@ namespace SeasonTracker.Controllers
         // GET: WatchLists
         public ViewResult Index()
         {
-            var watchLists = _context.WatchLists.ToList();
-
-            return View(watchLists);
+            return View();
         }
 
         //Passing id as a parameter, represents the Member Id.

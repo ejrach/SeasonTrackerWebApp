@@ -17,6 +17,7 @@ namespace SeasonTracker.App_Start
             Mapper.CreateMap<Member, MemberDto>();
             Mapper.CreateMap<TvShow, TvShowDto>();
             Mapper.CreateMap<WatchList, WatchListDto>();
+            Mapper.CreateMap<AccountType, AccountTypeDto>();
 
             //Dto to Domain
             Mapper.CreateMap<MemberDto, Member>().ForMember(c => c.Id, opt => opt.Ignore());

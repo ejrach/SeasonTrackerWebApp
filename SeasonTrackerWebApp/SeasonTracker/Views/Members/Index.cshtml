@@ -19,34 +19,79 @@
 <p>
     @Html.ActionLink("New Member", "New", "Members", null, new { @class = "btn btn-primary" })
 </p>
-@if (!Model.Any())
-{
-    <p>We don't have any members yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                @*These are the table headings*@
-                <th>Member Names</th>
-                <th>Member Details</th>
-                <th>Watch Lists</th>
-                <th>Account Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var member in Model)
-            {
-                <tr>
-                    @*This is the content which fits under each table heading*@
-                    <td>@member.MemberName</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Members", new { id = member.Id }, null)</td>
-                    <td>@Html.ActionLink("View", "Member", "WatchLists", new { id = member.Id }, null)</td>
-                    <td>@member.AccountType.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
 
+<table id="members-table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            @*These are the table headings*@
+            <th>Member</th>
+            <th>Account Type</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@* The following is jQuery code to call the Member API to delete a member.
+    This is client side development, so that our table is not rendered on the server side
+    like what the HTML represents. The API is rendering our table on the client through jQuery and Ajax
+*@
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            //Call DataTable on the member table to style it
+            var table = $("#members-table").DataTable({
+                ajax: {
+                    url: "/api/members",
+                    dataSrc: ""
+                },
+                //The following will represent json notation. Use POSTMAN extension to view the fields
+                columns: [
+                    {
+                        data: "memberName",
+                        render: function (data, type, member) {
+                            return "<a href='/members/edit/" + member.id + "'>" + member.memberName + "</a>";
+                        }
+                    },
+                    {
+                        data: "accountType.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-delete' data-member-id=" + data + ">Delete</button>";
+                        }
+                    }
+
+                ]
+
+            });
+
+            //'members-table' is what I chose to call the Id of the table
+            //'.js-delete' (a filter) is the class I chose to give the delete button
+            //This creates only one click handler for all delete buttons.
+            $("#members-table").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                //Need to install bootbox from package manager to use 'bootbox'
+                bootbox.confirm("Are you sure you want to delete this member?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            //Define the url for the api, passing the customer Id behind the button
+                            url: "/api/members/" + button.attr("data-member-id"),
+                            //defines the Request method
+                            method: "DELETE",
+                            success: function () {
+                                //console.log("Success");
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

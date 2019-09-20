@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 using System.Web.Http;
 using SeasonTracker.Models;
 using SeasonTracker.Dtos;
@@ -24,7 +25,10 @@ namespace SeasonTracker.Controllers.Api
         // GET /api/watchlists
         public IHttpActionResult GetWatchLists()
         {
-            var watchListDtos = _context.WatchLists.ToList().Select(Mapper.Map<WatchList, WatchListDto>);
+            //TBD: need to return the member name and the tv show name
+            var watchListDtos = _context.WatchLists
+                .ToList()
+                .Select(Mapper.Map<WatchList, WatchListDto>);
 
             return Ok(watchListDtos);
         }
@@ -32,7 +36,7 @@ namespace SeasonTracker.Controllers.Api
         //We want to return a single watch list.
         //This will respond to a request like this:
         // GET /api/watchlists/1
-        public IHttpActionResult GetWatchLists(int id)
+        public IHttpActionResult GetWatchList(int id)
         {
             //get the watch list
             var watchList = _context.WatchLists.SingleOrDefault(c => c.Id == id);

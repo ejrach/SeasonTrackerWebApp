@@ -96,17 +96,7 @@ namespace SeasonTracker.Controllers
         // This is what renders the "Index" page for Members
         public ViewResult Index()
         {
-            //When the Http request is received, a view is rendered with the Members of the application.
-            //The members property is a dbset we defined in our DbContext.
-            //A query to the database will immediately occur with the "ToList()" method.
-            //The List of members is displayed on the Index page.
-            //Index.cshtml provides the c# and the html markup in order to display information to the user.
-            //We are using "Include" method here to load the Members along with their account types
-            //together (because it comes from another table). This is called "Eager Loading". 
-            //"m" is member, and it goes to m.AccountType.
-            var members = _context.Members.Include(m => m.AccountType).ToList();
-
-            return View(members);
+            return View();
         }
 
         //This is the action that is processed when the "Details" page is rendered.

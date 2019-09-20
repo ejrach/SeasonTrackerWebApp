@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 using System.Web.Http;
 using SeasonTracker.Models;
 using SeasonTracker.Dtos;
@@ -24,7 +25,14 @@ namespace SeasonTracker.Controllers.Api
         // GET /api/members
         public IHttpActionResult GetMembers()
         {
-            var memberDtos = _context.Members.ToList().Select(Mapper.Map<Member, MemberDto>);
+            //var memberDtos = _context.Members.ToList().Select(Mapper.Map<Member, MemberDto>);
+
+            //In order to eager load the account type, we need to "include" it.
+            //Because the member data context includes the AccountTypeId, this sort of cross-references it.
+            var memberDtos = _context.Members
+                .Include(m => m.AccountType)
+                .ToList()
+                .Select(Mapper.Map<Member, MemberDto>);
 
             return Ok(memberDtos);
         }

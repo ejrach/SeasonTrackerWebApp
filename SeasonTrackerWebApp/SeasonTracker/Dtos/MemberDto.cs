@@ -14,6 +14,7 @@ namespace SeasonTracker.Dtos
     //Member domain model.
     public class MemberDto
     {
+        //There is no need to include all of the other properties in the domain model
         public int Id { get; set; }
 
         [Required]
@@ -23,6 +24,8 @@ namespace SeasonTracker.Dtos
         public bool IsSubscribedToNewsLetter { get; set; }
 
         public byte AccountTypeId { get; set; }
+
+        public AccountTypeDto AccountType { get; set; }
 
 
         ///*

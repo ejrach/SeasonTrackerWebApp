@@ -8,6 +8,7 @@ namespace SeasonTracker.Dtos
 {
     public class TvShowDto
     {
+        //There is no need to include all of the other properties in the domain model
         public int Id { get; set; }
 
         [Required]

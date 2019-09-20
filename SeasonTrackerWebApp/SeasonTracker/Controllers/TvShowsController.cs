@@ -31,10 +31,7 @@ namespace SeasonTracker.Controllers
         // This is what renders the Index page for TvShows
         public ViewResult Index()
         {
-            //load the TvShows from the DbContext
-            var tvShows = _context.TvShows.ToList();
-
-            return View(tvShows);
+            return View();
         }
 
         //This is the action that is processed when the "Details" page is rendered.
