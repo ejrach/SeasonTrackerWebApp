@@ -60,6 +60,7 @@ namespace SeasonTracker.Controllers
         }
 
         //This displays the TvShowForm for editing
+        [Authorize(Roles = RoleName.CanManageTvShows)]
         public ActionResult Edit(int id)
         {
             //First we need to get this TvShow with the TvShow id from the database.
@@ -84,6 +85,7 @@ namespace SeasonTracker.Controllers
         //Here we are saving/persiting data to the database.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.CanManageTvShows)]
         public ActionResult Save(TvShow tvShow)
         {
             //Use modelstate property to get access to validatation data.
@@ -100,8 +102,6 @@ namespace SeasonTracker.Controllers
 
                 return View("MovieForm", viewModel);
             }
-
-
 
             //if the tv show Id is 0, then we have a new tv show
             if (tvShow.Id == 0)

@@ -51,6 +51,7 @@ namespace SeasonTracker.Controllers.Api
         //To create a tv show, post a tv show to tv shows collection:
         // POST /api/tvshows
         [HttpPost]  //we do this because we are 'creating' a resource, not getting one.
+        [Authorize(Roles = RoleName.CanManageTvShows)]
         public IHttpActionResult CreateTvShow(TvShowDto tvShowDto)
         {
             //First we validate the object, and throw exception if model is not valid
@@ -76,6 +77,7 @@ namespace SeasonTracker.Controllers.Api
         //To update a tvShow:
         // PUT /api/tvshows/1
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageTvShows)]
         public IHttpActionResult UpdateTvShow(int id, TvShowDto tvShowDto)
         {
             //First we validate the object, and throw exception if model is not valid
@@ -98,6 +100,7 @@ namespace SeasonTracker.Controllers.Api
         //To delete a tv show:
         // DELETE /api/tvshows/1
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageTvShows)]
         public IHttpActionResult DeleteTvShow(int id)
         {
             var tvShowInDb = _context.TvShows.SingleOrDefault(c => c.Id == id);
