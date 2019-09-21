@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SeasonTracker.Controllers
 {
-    //[AllowAnonymous]    //Allow access to this page
+    [AllowAnonymous]    //Allow access to this page
     public class HomeController : Controller
     {
         public ActionResult Index()

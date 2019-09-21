@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SeasonTracker.Models;
@@ -155,11 +156,18 @@ namespace SeasonTracker.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //Temp code - use when creating a user role
-                    //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
-                    //var roleManager = new RoleManager<IdentityRole>(roleStore);
-                    //await roleManager.CreateAsync(new IdentityRole("CanManageMovies"));
-                    //await UserManager.AddToRoleAsync(user.Id, "CanManageMovies");
+                    //Temp code - use when creating a user role.
+                    //This code is creating a new user and assigning that user (with their given
+                    //user id) a specific role.
+                    //var roleApp = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    //var roleAdmin = new RoleManager<IdentityRole>(roleApp);
+                    //await roleAdmin.CreateAsync(new IdentityRole("CanManageTvShows"));
+                    //await roleAdmin.CreateAsync(new IdentityRole("CanManageMembers"));
+                    //await roleAdmin.CreateAsync(new IdentityRole("CanManageWatchLists"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanManageTvShows");
+                    //await UserManager.AddToRoleAsync(user.Id, "CanManageMembers");
+                    //await UserManager.AddToRoleAsync(user.Id, "CanManageWatchLists");
+
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

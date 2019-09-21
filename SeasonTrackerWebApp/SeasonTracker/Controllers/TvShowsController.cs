@@ -31,7 +31,10 @@ namespace SeasonTracker.Controllers
         // This is what renders the Index page for TvShows
         public ViewResult Index()
         {
-            return View();
+            if (User.IsInRole(RoleName.CanManageTvShows))
+                return View("List");
+
+            return View("ReadOnlyList");
         }
 
         //This is the action that is processed when the "Details" page is rendered.
@@ -48,6 +51,7 @@ namespace SeasonTracker.Controllers
             return View(tvShows);
         }
 
+        [Authorize(Roles = RoleName.CanManageTvShows)]
         public ViewResult New()
         {
             var viewModel = new TvShowFormViewModel();

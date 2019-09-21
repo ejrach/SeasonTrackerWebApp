@@ -270,11 +270,16 @@
     <Compile Include="Migrations\201909111519510_AddTvShowToMemberWatchListViewModel.Designer.cs">
       <DependentUpon>201909111519510_AddTvShowToMemberWatchListViewModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909211440429_SeedUsers.cs" />
+    <Compile Include="Migrations\201909211440429_SeedUsers.Designer.cs">
+      <DependentUpon>201909211440429_SeedUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\TvShow.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\WatchList.cs" />
@@ -498,7 +503,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\TvShows\Index.cshtml" />
+    <Content Include="Views\TvShows\List.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
@@ -529,6 +534,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\TvShows\ReadOnlyList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -612,6 +618,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909111519510_AddTvShowToMemberWatchListViewModel.resx">
       <DependentUpon>201909111519510_AddTvShowToMemberWatchListViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909211440429_SeedUsers.resx">
+      <DependentUpon>201909211440429_SeedUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
