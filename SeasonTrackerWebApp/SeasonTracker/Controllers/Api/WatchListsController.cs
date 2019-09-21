@@ -25,7 +25,6 @@ namespace SeasonTracker.Controllers.Api
         // GET /api/watchlists
         public IHttpActionResult GetWatchLists()
         {
-            //TBD: need to return the member name and the tv show name
             var watchListDtos = _context.WatchLists
                 .ToList()
                 .Select(Mapper.Map<WatchList, WatchListDto>);
@@ -33,7 +32,44 @@ namespace SeasonTracker.Controllers.Api
             return Ok(watchListDtos);
         }
 
-        //We want to return a single watch list.
+        //We want to return a list of watchlists based on the member Id.
+        //This is the convention built into ASP.NET Web API:
+        // GET /api/watchlists/member/6
+        //TBD - will need to come back to later in the course. Might be able to solve with 
+        //something like query string:
+        //public IEnumerable<MovieDto> GetMovies(string query = null)
+        //{
+        //    var moviesQuery = _context.Movies
+        //        .Include(m => m.Genre)
+        //        .Where(m => m.NumberAvailable > 0);
+
+        //    if (!String.IsNullOrWhiteSpace(query))
+        //        moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
+
+        //    return moviesQuery
+        //        .ToList()
+        //        .Select(Mapper.Map<Movie, MovieDto>);
+        //}
+        //[Route("api/watchlists/member/{id}")]      //Custom api route
+        //public IHttpActionResult GetWatchListsByMember(int? id)
+        //{
+        //    var watchList = _context.WatchLists
+        //        .Include(m => m.TvShow)
+        //        .Where(m => m.Id == id)
+        //        .SingleOrDefault();
+
+        //    //var watchList = _context.Members
+        //    //    .Include(m => m.WatchLists)
+        //    //    .Where(m => m.Id == id)
+        //    //    .SingleOrDefault();
+
+        //    if (watchList == null)
+        //        return (null);
+
+        //    return Ok(Mapper.Map<WatchList,WatchListDto>(watchList));
+        //}
+
+        //We want to return a single watch list given by the watchlist Id.
         //This will respond to a request like this:
         // GET /api/watchlists/1
         public IHttpActionResult GetWatchList(int id)

@@ -17,7 +17,13 @@ namespace SeasonTracker
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Formatting = Formatting.Indented;
 
+            //This was added for removing complexity of having too many custom attribute routing for api controllers.
+            //With this enabled, a custom route can be defined within the api controller that controls the view, like:
+            //[Route("api/watchlists/member/{mId}")]
             config.MapHttpAttributeRoutes();
+
+            //Important information on API routing:
+            //https://docs.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/routing-in-aspnet-web-api
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

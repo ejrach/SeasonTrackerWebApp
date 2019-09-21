@@ -25,6 +25,7 @@
         <tr>
             @*These are the table headings*@
             <th>Member</th>
+            <th>Seasons Tracking</th>
             <th>Account Type</th>
             <th>Delete</th>
         </tr>
@@ -54,6 +55,13 @@
                         data: "memberName",
                         render: function (data, type, member) {
                             return "<a href='/members/edit/" + member.id + "'>" + member.memberName + "</a>";
+                        }
+                    },
+                    {
+                        defaultContent: "test",
+                        //data: "memberName",
+                        render: function (data, type, member) {
+                            return "<a href='/watchlists/member/" + member.id + "'>" + "Details" + "</a>";
                         }
                     },
                     {
