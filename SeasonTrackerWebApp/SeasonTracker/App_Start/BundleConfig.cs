@@ -6,6 +6,7 @@ namespace SeasonTracker
     public class BundleConfig
     {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
+        //When we put our JS and CSS in these bundles, ASP.net will compress and combine them at runtime.
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
