@@ -64,6 +64,7 @@ namespace SeasonTracker.Controllers
         //}
 
         //Passing id as a parameter, represents the Watchlist Id so the user can edit their Tv Show watchlist
+        [HttpPost]
         public ActionResult Edit(int id)
         {
             //First we need to get this watchlist with the watchlist id from the database.
@@ -82,7 +83,8 @@ namespace SeasonTracker.Controllers
                 Member = watchList.Member
                 //ViewingList = watchList.ViewingList
             };
-            return View(viewModel);
+            //return View(viewModel);
+            return Content("It worked: " + id.ToString());
         }
 
         //Define the 'Save' action for the Watchlist. This is model binding. MVC framework binds
