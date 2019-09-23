@@ -10,10 +10,9 @@
     <thead>
         <tr>
 
-            <th>Member Name</th>
-            <th>Tv Show Name</th>
-            <th>Season Number</th>
-            <th>Number of Episodes</th>
+            <th>Id</th>
+            <th>Member Id</th>
+            <th>Tv Show Id</th>
             <th>Viewing List</th>
             <th>Delete</th>
         </tr>
@@ -33,17 +32,15 @@
                 },
                 columns: [
                     {
+                        data: "id"
+                    },
+                    {
                         data: "member.memberName"
+                        //data: "member.id"
                     },
                     {
                         data: "tvShow.tvShowName"
-                    },
-                    {
-                        data: "tvShow.seasonNumber"   
-                        //defaultContent: "test"
-                    },
-                    {
-                        data: "tvShow.numberOfEpisodes"
+                        //data: "tvShow.id"
                     },
                     {
                         data: "viewingList",

@@ -9,6 +9,9 @@ using SeasonTracker.Models;
 using SeasonTracker.Dtos;
 using AutoMapper;
 
+/*
+ * API Controller
+ */
 namespace SeasonTracker.Controllers.Api
 {
     public class MembersController : ApiController
@@ -20,39 +23,62 @@ namespace SeasonTracker.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
+        /*
+         * Method: In use
+         */
         //We want to return a list of members.
         //This is the convention built into ASP.NET Web API:
         // GET /api/members
-        public IHttpActionResult GetMembers()
+        // OR
+        // GET /api/members?id=4
+        //
+        public IEnumerable<MemberDto> GetMembers(string query = null)
         {
-            //var memberDtos = _context.Members.ToList().Select(Mapper.Map<Member, MemberDto>);
-
             //In order to eager load the account type, we need to "include" it.
             //Because the member data context includes the AccountTypeId, this sort of cross-references it.
-            var memberDtos = _context.Members
-                .Include(m => m.AccountType)
+            //var memberDtos = _context.Members
+            //    .Include(m => m.AccountType)
+            //    .ToList()
+            //    .Select(Mapper.Map<Member, MemberDto>);
+
+            //return Ok(memberDtos);
+
+            var membersQuery = _context.Members
+                .Include(m => m.AccountType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                membersQuery = membersQuery.Where(m => m.Id == Convert.ToInt16(query));
+
+            return membersQuery
                 .ToList()
                 .Select(Mapper.Map<Member, MemberDto>);
-
-            return Ok(memberDtos);
         }
 
+        /*
+         * Method: TBD
+         */
         //We want to return a single member.
         //This will respond to a request like this:
         // GET /api/members/1
         public IHttpActionResult GetMember(int id)
         {
             //get the member
-            var member = _context.Members.SingleOrDefault(c => c.Id == id);
+            var member = _context.Members
+                .Include(m => m.AccountType)
+                .SingleOrDefault(c => c.Id == id);
 
             //if the member is not found
             if (member == null)
                 return NotFound();
 
             //otherwise return the member
+            //TBD: need to return the view
             return Ok(Mapper.Map<Member, MemberDto>(member));
         }
 
+        /*
+         * Method: TBD
+         */
         //To create a member, post a member to members collection:
         // POST /api/members
         [HttpPost]  //we do this because we are 'creating' a resource, not getting one.
@@ -78,6 +104,9 @@ namespace SeasonTracker.Controllers.Api
 
         }
 
+        /*
+         * Method: TBD
+         */
         //To update a member:
         // PUT /api/members/1
         [HttpPut]
@@ -100,6 +129,9 @@ namespace SeasonTracker.Controllers.Api
             return Ok();
         }
 
+        /*
+         * Method: In use
+         */
         //To delete a member:
         // DELETE /api/members/1
         [HttpDelete]

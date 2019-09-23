@@ -5,6 +5,9 @@ using System.Web.Mvc;
 using SeasonTracker.Models;
 using SeasonTracker.ViewModels;
 
+/*
+ * MVC Controller
+ */
 namespace SeasonTracker.Controllers
 {
     public class WatchListsController : Controller
@@ -34,31 +37,31 @@ namespace SeasonTracker.Controllers
 
         //Passing id as a parameter, represents the Member Id.
         //In this action we are consolidating the watchlists into a view per individual member
-        public ActionResult Member(int? id)
-        {
-            if (id == null)
-                return HttpNotFound();
+        //public ActionResult Member(int? id)
+        //{
+        //    if (id == null)
+        //        return HttpNotFound();
 
-            //For the members' specific episode viewing list, include watchlists from the 
-            //WatchLists table where the member Id is equal to the parameter passed to the action.
-            Member member = _context.Members
-                .Include(m => m.WatchLists)
-                .Where(m => m.Id == id)
-                .SingleOrDefault();
+        //    //For the members' specific episode viewing list, include watchlists from the 
+        //    //WatchLists table where the member Id is equal to the parameter passed to the action.
+        //    Member member = _context.Members
+        //        .Include(m => m.WatchLists)
+        //        .Where(m => m.Id == id)
+        //        .SingleOrDefault();
 
-            if (member == null)
-                return HttpNotFound();
+        //    if (member == null)
+        //        return HttpNotFound();
 
-            var viewModel = new WatchListViewModel
-            {
-                Id = member.Id,
-                Member = member,
-                TvShows = member.TvShows.ToList(),
-                WatchLists = member.WatchLists.ToList()
-            };
+        //    var viewModel = new WatchListViewModel
+        //    {
+        //        Id = member.Id,
+        //        Member = member,
+        //        TvShows = member.TvShows.ToList(),
+        //        WatchLists = member.WatchLists.ToList()
+        //    };
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
         //Passing id as a parameter, represents the Watchlist Id so the user can edit their Tv Show watchlist
         public ActionResult Edit(int id)
@@ -87,21 +90,21 @@ namespace SeasonTracker.Controllers
         //Here we are saving/persiting data to the database.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(WatchList watchList)
-        {
-            //Using the Single method here because if the given watchlist is not found, 
-            //we want to throw an exception. This action should only be called anyways because of posting
-            //the watchlist edit form.
-            var watchListInDb = _context.WatchLists.Single(w => w.Id == watchList.Id);
+        //public ActionResult Save(WatchList watchList)
+        //{
+        //    //Using the Single method here because if the given watchlist is not found, 
+        //    //we want to throw an exception. This action should only be called anyways because of posting
+        //    //the watchlist edit form.
+        //    var watchListInDb = _context.WatchLists.Single(w => w.Id == watchList.Id);
 
-            watchListInDb.ViewingList = watchList.ViewingList;           
+        //    watchListInDb.ViewingList = watchList.ViewingList;           
 
-            //Persist the changes. This creates SQL statements at runtime, within a transaction.
-            _context.SaveChanges();
+        //    //Persist the changes. This creates SQL statements at runtime, within a transaction.
+        //    _context.SaveChanges();
 
-            //Now redirect the members to the members page "Index"
-            return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
-        }
+        //    //Now redirect the members to the members page "Index"
+        //    return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
+        //}
 
         //Passing id as a parameter, represents the member Id so the user can add a new tv 
         //show to their Tv Show watchlist
@@ -124,32 +127,32 @@ namespace SeasonTracker.Controllers
             return View(viewModel);
         }
 
-        [Route("watchlists/add/{mId}/{tId}")]
-        public ActionResult AddNewWatchList(int mId, int tId)
-        {
-            //Return the tv show record from the database associated with the Tv Show Id
-            var tvShow = _context.TvShows.Single(t => t.Id == tId);
+        //[Route("watchlists/add/{mId}/{tId}")]
+        //public ActionResult AddNewWatchList(int mId, int tId)
+        //{
+        //    //Return the tv show record from the database associated with the Tv Show Id
+        //    var tvShow = _context.TvShows.Single(t => t.Id == tId);
 
-            //get the number of episodes from the record
-            string viewingList = InitializeEpisodes(tvShow.NumberOfEpisodes);
+        //    //get the number of episodes from the record
+        //    string viewingList = InitializeEpisodes(tvShow.NumberOfEpisodes);
 
-            //Define a new watchlist record
-            var watchListInDb = new WatchList
-            {
-                MemberId = mId,
-                TvShowId = tId,
-                ViewingList = viewingList
-            };
+        //    //Define a new watchlist record
+        //    var watchListInDb = new WatchList
+        //    {
+        //        MemberId = mId,
+        //        TvShowId = tId,
+        //        ViewingList = viewingList
+        //    };
            
-            //Add a new watchlist record to the database
-            _context.WatchLists.Add(watchListInDb);
+        //    //Add a new watchlist record to the database
+        //    _context.WatchLists.Add(watchListInDb);
 
-            //Persist the changes. This creates SQL statements at runtime, within a transaction.
-            _context.SaveChanges();
+        //    //Persist the changes. This creates SQL statements at runtime, within a transaction.
+        //    _context.SaveChanges();
 
-            //Now redirect the members to the members page "Index"
-            return RedirectToAction("Member/" + mId, "WatchLists");
-        }
+        //    //Now redirect the members to the members page "Index"
+        //    return RedirectToAction("Member/" + mId, "WatchLists");
+        //}
 
         private string InitializeEpisodes(byte numberOfEpisodes)
         {

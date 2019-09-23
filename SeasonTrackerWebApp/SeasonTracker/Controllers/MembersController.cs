@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using SeasonTracker.Models;
 using SeasonTracker.ViewModels;
 
+/*
+ * MVC Controller
+ */
 namespace SeasonTracker.Controllers
 {
     public class MembersController : Controller
@@ -28,6 +31,9 @@ namespace SeasonTracker.Controllers
             _context.Dispose();
         }
 
+        /*
+         * Method: In use
+         */
         //Display the member form with a list of the account types
         public ActionResult New()
         {
@@ -46,6 +52,9 @@ namespace SeasonTracker.Controllers
             return View("MemberForm", viewModel);
         }
 
+        /*
+         * Method: In use
+         */
         //Define the 'Save' action for Member. This is model binding. MVC framework binds
         //this model to the request data.
         //Here we are saving/persiting data to the database.
@@ -92,13 +101,20 @@ namespace SeasonTracker.Controllers
             return RedirectToAction("Index", "Members");
         }
 
+        /*
+         * Method: In use
+         */
         // GET: Members
-        // This is what renders the "Index" page for Members
+        // This is what renders the "Index" page to display all Members. The Index page calls 
+        // /api/members
         public ViewResult Index()
         {
             return View();
         }
 
+        /*
+         * Method: In use
+         */
         //This is the action that is processed when the "Details" page is rendered.
         public ActionResult Details(int id)
         {
@@ -112,6 +128,9 @@ namespace SeasonTracker.Controllers
             return View(member);
         }
 
+        /*
+         * Method: In use
+         */
         //This displays the MemberForm for editing
         public ActionResult Edit(int id)
         {

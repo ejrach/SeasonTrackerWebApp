@@ -274,6 +274,10 @@
     <Compile Include="Migrations\201909211440429_SeedUsers.Designer.cs">
       <DependentUpon>201909211440429_SeedUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909231102184_UpdateWatchListModelToIncludeMemberAndTvShowId.cs" />
+    <Compile Include="Migrations\201909231102184_UpdateWatchListModelToIncludeMemberAndTvShowId.Designer.cs">
+      <DependentUpon>201909231102184_UpdateWatchListModelToIncludeMemberAndTvShowId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -622,6 +626,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909211440429_SeedUsers.resx">
       <DependentUpon>201909211440429_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909231102184_UpdateWatchListModelToIncludeMemberAndTvShowId.resx">
+      <DependentUpon>201909231102184_UpdateWatchListModelToIncludeMemberAndTvShowId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

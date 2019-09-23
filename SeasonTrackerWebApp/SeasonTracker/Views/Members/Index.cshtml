@@ -12,7 +12,6 @@
 
 @{
     ViewBag.Title = "Members";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Members</h2>
@@ -58,10 +57,9 @@
                         }
                     },
                     {
-                        defaultContent: "test",
-                        //data: "memberName",
+                        data: "id",
                         render: function (data, type, member) {
-                            return "<a href='/watchlists/member/" + member.id + "'>" + "Details" + "</a>";
+                            return "<a href='/members/details/" + member.id + "'>Details</a>";
                         }
                     },
                     {
@@ -73,10 +71,38 @@
                             return "<button class='btn-link js-delete' data-member-id=" + data + ">Delete</button>";
                         }
                     }
-
                 ]
-
             });
+
+            //Details
+            @*$("#members-table").on("click", ".js-details", function () {
+                var button = $(this);
+
+                //Need to install bootbox from package manager to use 'bootbox'
+                bootbox.confirm("Are you sure you want to view details this member?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            //Define the url for the api, passing the member Id behind the button
+                            url: "/api/members/" + button.attr("data-member-id"),
+                            //defines the Request method in the members controller API
+                            method: "GET",
+                            //TBD: Can I reroute to the members/details page?????
+                            success: function (data, status, xhr) {
+                                console.log("Success");
+                                console.log(data.memberName);
+                                console.log(data.accountType.name);
+                                console.log(data.isSubscribedToNewsLetter);
+
+                                $.post('@Url.Action("Index", "TvShows")', data);
+                                //table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            });*@
+
+
+
 
             //'members-table' is what I chose to call the Id of the table
             //'.js-delete' (a filter) is the class I chose to give the delete button
@@ -90,7 +116,7 @@
                         $.ajax({
                             //Define the url for the api, passing the customer Id behind the button
                             url: "/api/members/" + button.attr("data-member-id"),
-                            //defines the Request method
+                            //defines the Request method in the members controller API
                             method: "DELETE",
                             success: function () {
                                 //console.log("Success");

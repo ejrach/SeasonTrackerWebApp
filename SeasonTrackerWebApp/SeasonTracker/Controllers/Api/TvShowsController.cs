@@ -9,6 +9,9 @@ using SeasonTracker.Models;
 using SeasonTracker.Dtos;
 using AutoMapper;
 
+/*
+ * API Controller
+ */
 namespace SeasonTracker.Controllers.Api
 {
     public class TvShowsController : ApiController

@@ -27,21 +27,22 @@ namespace SeasonTracker.Models
         [Display(Name = "Account Type")]
         public byte AccountTypeId { get; set; }
 
+        public AccountType AccountType { get; set; }
 
         /*
          * 
          * Model References
          * 
          */
-        public AccountType AccountType { get; set; }
+        //public AccountType AccountType { get; set; }
 
         //Each member can have a collection of TvShows they are watching
         //TBD: need to get rid of virtual - could be slowing application down. See Mosh video on Glimpse
-        public virtual ICollection<TvShow> TvShows { get; set; }
+        //public virtual ICollection<TvShow> TvShows { get; set; }
 
         //Each member can have a collection of WatchLists to display
         //TBD: need to get rid of virtual - could be slowing application down. See Mosh video on Glimpse
-        public virtual ICollection<WatchList> WatchLists { get; set; }
+        //public virtual ICollection<WatchList> WatchLists { get; set; }
 
     }
 }

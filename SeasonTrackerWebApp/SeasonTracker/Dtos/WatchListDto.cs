@@ -8,14 +8,14 @@ namespace SeasonTracker.Dtos
 {
     public class WatchListDto
     {
-        //There is no need to include all of the other properties in the domain model
         public int Id { get; set; }
+        ////There is no need to include all of the other properties in the domain model
+        //public int MemberId { get; set; }
 
-        public int MemberId { get; set; }
+        //public int TvShowId { get; set; }
 
+        //public List<int> TvShowIds { get; set; }
         public MemberDto Member { get; set; }
-
-        public int TvShowId { get; set; }
 
         public TvShowDto TvShow { get; set; }
 

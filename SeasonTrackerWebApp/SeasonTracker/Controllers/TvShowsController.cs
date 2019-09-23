@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using SeasonTracker.Models;
 using SeasonTracker.ViewModels;
 
+/*
+ * MVC Controller
+ */
 namespace SeasonTracker.Controllers
 {
     public class TvShowsController : Controller
