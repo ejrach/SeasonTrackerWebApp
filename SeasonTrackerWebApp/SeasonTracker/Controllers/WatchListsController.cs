@@ -52,16 +52,16 @@ namespace SeasonTracker.Controllers
 
             //STEP 2) Important for understanding. By including the TvShow model, we then get the details
             //          of the shows that are included in the query.
-            var tvShows = _context.WatchLists
-                .Include(t => t.TvShow)
-                .Include(t => t.Member)
-                .Where(t => t.Member.Id == id)
-                //.Single();
-                .ToList();
+            //var tvShows = _context.WatchLists
+            //    .Include(t => t.TvShow)
+            //    .Include(t => t.Member)
+            //    .Where(t => t.Member.Id == id)
+            //    //.Single();
+            //    .ToList();
 
 
-            if (tvShows == null)
-                return HttpNotFound();
+            //if (tvShows == null)
+            //    return HttpNotFound();
 
             var viewModel = new WatchListViewModel
             {

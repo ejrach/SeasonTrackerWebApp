@@ -4,23 +4,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*Display the member name and the TV Shows they are subscribed to*@
+@*Display the member name and the TV Shows they can subscribe to*@
 <h2>Add a new Tv Show to your list, @Model.Member.MemberName</h2>
-<table class="table table-bordered table-hover">
+<table id="tvshows-table" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Add</th>
-            <th>Tv Show</th>
+            <th>Tv Show Name</th>
+            <th>Season Number</th>
+            <th>Number of Episodes</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.TvShows)
-        {
-            <tr>
-                <td>@Html.ActionLink("Add", "AddNewWatchList", "WatchLists", new { mId = Model.Member.Id, tId = item.Id }, null)</td>
-                <td>@item.TvShowName: Season @item.SeasonNumber</td>
-            </tr>
-        }
     </tbody>
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#tvshows-table").DataTable({
+                ajax: {
+                    url: "/api/tvShows",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-Add' data-tvshow-id=" + data + ">Add</button>";
+                        }
+                    },
+                    {
+                        data: "tvShowName",
+                        render: function (data, type, tvShow) {
+                            return "<a href='/tvshows/edit/" + tvShow.id + "'>" + tvShow.tvShowName + "</a>";
+                        }
+                    },
+                    {
+                        data: "seasonNumber"
+                    },
+                    {
+                        data: "numberOfEpisodes"
+                    }
+                ]
+            });
+
+            //NOTE/TBD: here's where I want to implement an interface similar to the adding new rentals.
+            $("#tvshows-table").on("click", ".js-add", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to add this Tv Show?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/tvshows/" + button.attr("data-tvshow-id"),
+                            method: "CREATE",
+                            success: function () {
+                                alert("Tv Show Added!")
+                            },
+                            error: function() {
+                                alert("Tv Show not added. Something went wrong.");
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
 

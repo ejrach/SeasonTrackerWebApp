@@ -115,6 +115,9 @@ namespace SeasonTracker.Controllers.Api
                 .Select(Mapper.Map<WatchList, WatchListDto>);
         }
 
+
+
+
         //To create a watchlist, post a watchlist to watchlist collection:
         // POST /api/watchlists
         //[HttpPost]  //we do this because we are 'creating' a resource, not getting one.
@@ -138,6 +141,12 @@ namespace SeasonTracker.Controllers.Api
         //    //i.e. /api/watchlists/10
         //    return Created(new Uri(Request.RequestUri + "/" + watchList.Id), watchListDto);
         //}
+
+
+        //[Route("watchlists/add/{mId}/{tId}")]
+
+
+
 
         //To update a watchlist:
         // PUT /api/watchlists/1
