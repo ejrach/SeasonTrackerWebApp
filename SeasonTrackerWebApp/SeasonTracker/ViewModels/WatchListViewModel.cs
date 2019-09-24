@@ -18,12 +18,12 @@ namespace SeasonTracker.ViewModels
 
         //public string MemberName { get; set; }
         //public int MemberId { get; set; }
-        public Member Member { get; set; }
+        //public Member Member { get; set; }
 
         //Because the view that uses this model will display a list of the TvShows 
-        public List<TvShow> TvShows { get; set; }
+        //public List<TvShow> TvShows { get; set; }
 
         //Because the view that uses this model will display a list of the WatchLists 
-        public List<WatchList> WatchLists { get; set; }
+        //public List<WatchList> WatchLists { get; set; }
     }
 }

@@ -119,7 +119,9 @@ namespace SeasonTracker.Controllers
         public ActionResult Details(int id)
         {
             //When the Index page is loaded, each user is displayed with an ActionLink that processes this "Details" action method.
-            var member = _context.Members.Include(m => m.AccountType).SingleOrDefault(m => m.Id == id);
+            var member = _context.Members
+                .Include(m => m.AccountType)
+                .SingleOrDefault(m => m.Id == id);
 
             if (member == null)
                 return HttpNotFound();

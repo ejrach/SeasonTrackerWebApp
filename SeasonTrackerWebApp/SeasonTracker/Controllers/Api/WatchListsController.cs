@@ -77,17 +77,42 @@ namespace SeasonTracker.Controllers.Api
         //We want to return a single watch list given by the watchlist Id.
         //This will respond to a request like this:
         // GET /api/watchlists/1
-        public IHttpActionResult GetWatchList(int id)
+        //public IHttpActionResult GetWatchList(int id)
+        //{
+        //    //get the watch list
+        //    var watchList = _context.WatchLists.SingleOrDefault(c => c.Id == id);
+
+        //    //if the watchList is not found
+        //    if (watchList == null)
+        //        return NotFound();
+
+        //    //otherwise return the watchList
+        //    return Ok(Mapper.Map<WatchList, WatchListDto>(watchList));
+        //}
+
+        //We want to return all watchlists for a given member Id.
+        //This will respond to a request like this:
+        // GET /api/watchlists/1
+        public IEnumerable<WatchListDto> GetWatchList(int id)
         {
+            var watchList = _context.WatchLists
+                .Include(t => t.TvShow)
+                .Include(t => t.Member)
+                .Where(t => t.Member.Id == id)
+                //.Single();
+                .ToList();
+
             //get the watch list
-            var watchList = _context.WatchLists.SingleOrDefault(c => c.Id == id);
+            //var watchList = _context.WatchLists.SingleOrDefault(c => c.Id == id);
 
             //if the watchList is not found
-            if (watchList == null)
-                return NotFound();
+            //if (watchList == null)
+            //    return NotFound();
 
             //otherwise return the watchList
-            return Ok(Mapper.Map<WatchList, WatchListDto>(watchList));
+            //return Ok(Mapper.Map<WatchList, WatchListDto>(watchList));
+            return watchList
+                .Select(Mapper.Map<WatchList, WatchListDto>);
         }
 
         //To create a watchlist, post a watchlist to watchlist collection:

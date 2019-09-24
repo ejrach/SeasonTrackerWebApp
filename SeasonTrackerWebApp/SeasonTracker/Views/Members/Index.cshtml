@@ -24,8 +24,9 @@
         <tr>
             @*These are the table headings*@
             <th>Member</th>
-            <th>Seasons Tracking</th>
+            <th>Member Details</th>
             <th>Account Type</th>
+            <th>Seasons Tracking</th>
             <th>Delete</th>
         </tr>
     </thead>
@@ -59,11 +60,17 @@
                     {
                         data: "id",
                         render: function (data, type, member) {
-                            return "<a href='/members/details/" + member.id + "'>Details</a>";
+                            return "<a href='/members/details/" + member.id + "'>View</a>";
                         }
                     },
                     {
                         data: "accountType.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data, type, member) {
+                            return "<a href='/watchlists/member/" + member.id + "'>View</a>";
+                        }
                     },
                     {
                         data: "id",

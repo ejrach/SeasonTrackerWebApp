@@ -37,10 +37,10 @@ namespace SeasonTracker.Controllers
 
         //Passing id as a parameter, represents the Member Id.
         //In this action we are consolidating the watchlists into a view per individual member
-        public ActionResult Member(int? id)
+        public ActionResult Member(int id)
         {
-            if (id == null)
-                return HttpNotFound();
+            //if (id == null)
+            //    return HttpNotFound();
 
             //For the members' specific episode viewing list, include watchlists from the 
             //WatchLists table where the member Id is equal to the parameter passed to the action.
@@ -56,6 +56,7 @@ namespace SeasonTracker.Controllers
                 .Include(t => t.TvShow)
                 .Include(t => t.Member)
                 .Where(t => t.Member.Id == id)
+                //.Single();
                 .ToList();
 
 
@@ -65,7 +66,7 @@ namespace SeasonTracker.Controllers
             var viewModel = new WatchListViewModel
             {
                 //TBD - LEFT off here
-                //Id = tvShows.
+                Id = id
                 //Member = member,
                 //TvShows = .TvShows.ToList(),
                 //WatchLists = member.WatchLists.ToList()
