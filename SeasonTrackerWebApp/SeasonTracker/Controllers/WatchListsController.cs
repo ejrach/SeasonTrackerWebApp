@@ -37,39 +37,56 @@ namespace SeasonTracker.Controllers
 
         //Passing id as a parameter, represents the Member Id.
         //In this action we are consolidating the watchlists into a view per individual member
-        //public ActionResult Member(int? id)
-        //{
-        //    if (id == null)
-        //        return HttpNotFound();
+        public ActionResult Member(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
 
-        //    //For the members' specific episode viewing list, include watchlists from the 
-        //    //WatchLists table where the member Id is equal to the parameter passed to the action.
-        //    Member member = _context.Members
-        //        .Include(m => m.WatchLists)
-        //        .Where(m => m.Id == id)
-        //        .SingleOrDefault();
+            //For the members' specific episode viewing list, include watchlists from the 
+            //WatchLists table where the member Id is equal to the parameter passed to the action.
+            //STEP 1) Important for understanding. This returns a list of tv shows, where the member id
+            //          field is equal to what's passed to this method.
+            //var tvShows = _context.WatchLists
+            //    .Where(t => t.Member.Id == id)
+            //    .ToList();
 
-        //    if (member == null)
-        //        return HttpNotFound();
+            //STEP 2) Important for understanding. By including the TvShow model, we then get the details
+            //          of the shows that are included in the query.
+            var tvShows = _context.WatchLists
+                .Include(t => t.TvShow)
+                .Include(t => t.Member)
+                .Where(t => t.Member.Id == id)
+                .ToList();
 
-        //    var viewModel = new WatchListViewModel
-        //    {
-        //        Id = member.Id,
-        //        Member = member,
-        //        TvShows = member.TvShows.ToList(),
-        //        WatchLists = member.WatchLists.ToList()
-        //    };
 
-        //    return View(viewModel);
-        //}
+            if (tvShows == null)
+                return HttpNotFound();
+
+            var viewModel = new WatchListViewModel
+            {
+                //TBD - LEFT off here
+                //Id = tvShows.
+                //Member = member,
+                //TvShows = .TvShows.ToList(),
+                //WatchLists = member.WatchLists.ToList()
+            };
+
+            return View(viewModel);
+        }
 
         //Passing id as a parameter, represents the Watchlist Id so the user can edit their Tv Show watchlist
-        [HttpPost]
+        //[HttpPost]
         public ActionResult Edit(int id)
         {
-            //First we need to get this watchlist with the watchlist id from the database.
+            //First we need to get this specific watchlist with the watchlist id from the database.
             //If the watchlist with the given id exists it will be returned, otherwise null.
-            var watchList = _context.WatchLists.SingleOrDefault(c => c.Id == id);
+            var watchList = _context.WatchLists
+                .Include(w => w.Member)
+                .Include(w => w.TvShow)
+                .SingleOrDefault(c => c.Id == id);
+
+
+
 
             if (watchList == null)
                 return HttpNotFound();
@@ -81,10 +98,8 @@ namespace SeasonTracker.Controllers
                 WatchList = watchList,
                 TvShow = watchList.TvShow,
                 Member = watchList.Member
-                //ViewingList = watchList.ViewingList
             };
-            //return View(viewModel);
-            return Content("It worked: " + id.ToString());
+            return View(viewModel);
         }
 
         //Define the 'Save' action for the Watchlist. This is model binding. MVC framework binds
@@ -92,21 +107,23 @@ namespace SeasonTracker.Controllers
         //Here we are saving/persiting data to the database.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Save(WatchList watchList)
-        //{
-        //    //Using the Single method here because if the given watchlist is not found, 
-        //    //we want to throw an exception. This action should only be called anyways because of posting
-        //    //the watchlist edit form.
-        //    var watchListInDb = _context.WatchLists.Single(w => w.Id == watchList.Id);
+        public ActionResult Save(WatchList watchList)
+        {
+            //Using the Single method here because if the given watchlist is not found, 
+            //we want to throw an exception. This action should only be called anyways because of posting
+            //the watchlist edit form.
+            var watchListInDb = _context.WatchLists
+                .Include(w => w.Member)
+                .Single(w => w.Id == watchList.Id);
 
-        //    watchListInDb.ViewingList = watchList.ViewingList;           
+            watchListInDb.ViewingList = watchList.ViewingList;
 
-        //    //Persist the changes. This creates SQL statements at runtime, within a transaction.
-        //    _context.SaveChanges();
+            //Persist the changes. This creates SQL statements at runtime, within a transaction.
+            _context.SaveChanges();
 
-        //    //Now redirect the members to the members page "Index"
-        //    return RedirectToAction("Member/" + watchListInDb.MemberId.ToString(), "WatchLists");
-        //}
+            //Now redirect the members to the members page "Index"
+            return RedirectToAction("Member/" + watchListInDb.Member.Id.ToString(), "WatchLists");
+        }
 
         //Passing id as a parameter, represents the member Id so the user can add a new tv 
         //show to their Tv Show watchlist

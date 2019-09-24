@@ -43,15 +43,15 @@
                         //data: "tvShow.id"
                     },
                     {
-                        data: "id",
-                        //data: "viewingList",
-                        //render: function (data, type, watchList) {
-                        //    return "<a href='/watchlists/edit/" + watchList.id + "'>" + watchList.viewingList + "</a>";
-                        //}
-                        render: function (data) {
-                            return "<button class='btn-link js-watchLists' data-watchlist-edit-id=" + data + ">" + "Edit" + "</button>";
-                            //return "<a href='/tvshows/edit/" + tvShow.id + "'>" + tvShow.tvShowName + "</a>";
+                        //data: "id",
+                        data: "viewingList",
+                        render: function (data, type, watchList) {
+                            return "<a href='/WatchLists/edit/" + watchList.id + "'>" + watchList.viewingList + "</a>";
                         }
+                        //render: function (data) {
+                        //    return "<button class='btn-link js-watchLists' data-watchlist-edit-id=" + data + ">" + "Edit" + "</button>";
+                        //    return "<a href='/tvshows/edit/" + tvShow.id + "'>" + tvShow.tvShowName + "</a>";
+                        //}
                     },
                     {
                         data: "id",
@@ -66,7 +66,7 @@
 
 
 
-            $("#watchLists-table").on("click", ".js-watchLists", function () {
+            @*$("#watchLists-table").on("click", ".js-watchLists", function () {
                 var button = $(this);
                 $.ajax({
                     url: "/WatchLists/Edit/" + button.attr("data-watchlist-edit-id"),
@@ -77,11 +77,11 @@
                     success: function (data) {
                         //console.log("success");
                         alert(data);
-                        location.href = '@Url.Action("Index","Home")';
+                        location.href = url;
                     }
                     //location.href = '@Url.Action("Index","Home")'
                 }); 
-            });
+            });*@
 
 
 

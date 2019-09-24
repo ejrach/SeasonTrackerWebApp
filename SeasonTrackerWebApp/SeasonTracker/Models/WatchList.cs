@@ -17,6 +17,7 @@ namespace SeasonTracker.Models
         [Display(Name = "Episode Viewing List")]
         public string ViewingList { get; set; }
 
+
         /*
          * 
          * Model References

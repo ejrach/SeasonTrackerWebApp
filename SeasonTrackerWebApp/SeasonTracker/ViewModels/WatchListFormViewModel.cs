@@ -14,11 +14,12 @@ namespace SeasonTracker.ViewModels
     {
         //For this View Model, we simply want access to the Viewing List within WatchList,
         //the member ID from Member, and the TV Show name and Season
+        //public int Id { get; set; }
         public WatchList WatchList { get; set; }
 
         //Let's reuse the Member model
         public Member Member { get; set; }
-        
+
         //Let's reuse the TvShow model
         public TvShow TvShow { get; set; }
     }
