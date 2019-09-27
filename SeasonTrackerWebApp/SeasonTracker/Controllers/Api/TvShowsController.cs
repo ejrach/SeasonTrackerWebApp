@@ -26,6 +26,7 @@ namespace SeasonTracker.Controllers.Api
         // GET /api/tvshows
         // OR
         // GET /api/tvshows?id=5
+        //Our typeahead plugin is going to send the query parameter here
         public IEnumerable<TvShowDto> GetTvShows(string query = null)
         {
             //We're applying this query to get the TvShows, after selecting all rows. We don't need

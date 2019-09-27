@@ -6,7 +6,7 @@
 @*Display the member name and the TV Shows they are subscribed to*@
 <h2>Watchlist Dashboard for member: @Model.MemberId</h2>
 
-<form>
+<form id="newWatchList">
     <div class="form-group">
         <label>Search for New Tv Show</label>
         <div class="tt-container">
@@ -39,6 +39,7 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
 
@@ -46,13 +47,14 @@
              * Javascript for typeahead
              * This is javascript from: https://twitter.github.io/typeahead.js/examples/#remote
              * Bloodhound is the suggestion engine behind typeahead.
-             * 
+             *
              */
 
-            //vm - view model.
-            //When the member submits the form, this vm will be sent to the newWatchLists api 
+            //vm - 'view model' on the client.
+            //When the member submits the form, this vm will be sent to the newWatchLists api
             //"CreateNewWatchLists"
             var vm = {
+                //initialize a property to an empty array.
                 tvShowIds: []
             };
 
@@ -91,15 +93,37 @@
                 //Append the tv show from the element with the id 'tvShows', and add the name of the movie
                 $("#tvShows").append("<li class='list-group-item'>" + tvShow.tvShowName + "</li>");
 
-                //Get the movie element and specify the property we wanto to update
+                //Get the movie element and specify the property we want to update
                 $("#tvShow").typeahead("val", "");
 
-                vm.showIds.push(tvShow.id);
+                //Associate the member Id with the tv show Id to add to the watchlist
+                vm.memberId = @Model.MemberId;
+                vm.tvShowIds.push(tvShow.id);
+            });
+
+            //Here, we get the form with the id "newWatchList" and handle the submit function.
+            //e represents the submit event.
+            $("#newWatchList").submit(function (e) {
+                //This will prevent the form from submitting normally. Need this in order to use Ajax.
+                e.preventDefault();
+
+                //Then we can use Ajax to submit the view model 
+                $.ajax({
+                    url: "/api/newWatchLists",  //the api controller.
+                    method: "post",
+                    data: vm                    //represents our dto expected by the api controller
+                })
+                .done(function () {
+                    toastr.success("Watchlist successfully recorded.");
+                })
+                .fail(function () {
+                    toastr.error("Something unexpected occured.");
+                });
             });
 
             /*
              * Display the data in a table.
-             * 
+             *
              */
             var table = $("#member-watchlist-table").DataTable({
                 ajax: {
