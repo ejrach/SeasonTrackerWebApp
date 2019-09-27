@@ -55,7 +55,7 @@ namespace SeasonTracker.Controllers.Api
         //        .ToList()
         //        .Select(Mapper.Map<Movie, MovieDto>);
         //}
-        //[Route("api/watchlists/member/{id}")]      //Custom api route
+        //[Route("api/watchlists/dashboard/{id}")]      //Custom api route
         //public IHttpActionResult GetWatchListsByMember(int? id)
         //{
         //    var watchList = _context.WatchLists
@@ -114,6 +114,26 @@ namespace SeasonTracker.Controllers.Api
             return watchList
                 .Select(Mapper.Map<WatchList, WatchListDto>);
         }
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

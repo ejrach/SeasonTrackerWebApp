@@ -1,0 +1,137 @@
+﻿@model  SeasonTracker.ViewModels.WatchListViewModel
+@{
+    ViewBag.Title = "Member Dashboard";
+}
+
+@*Display the member name and the TV Shows they are subscribed to*@
+<h2>Watchlist Dashboard for member: @Model.MemberId</h2>
+
+<form>
+    <div class="form-group">
+        <label>Search for New Tv Show</label>
+        <div class="tt-container">
+            <input id="tvShow" type="text" value="" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="tvShows" class="list-group"></ul>
+        </div>
+    </div>
+    <button class="btn btn-primary">Add</button>
+    <br />
+    <br />
+</form>
+
+<table id="member-watchlist-table" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Member Id</th>
+            <th>Watch List Id</th>
+            <th>Tv Show</th>
+            <th>Season Number</th>
+            <th>Viewing List</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            /*
+             * Javascript for typeahead
+             * This is javascript from: https://twitter.github.io/typeahead.js/examples/#remote
+             * Bloodhound is the suggestion engine behind typeahead.
+             * 
+             */
+
+            //vm - view model.
+            //When the member submits the form, this vm will be sent to the newWatchLists api 
+            //"CreateNewWatchLists"
+            var vm = {
+                tvShowIds: []
+            };
+
+            //We want to tokenize 'name' of the tv show.
+            //Note: I commented out the prefetch so I could actually get tv show data from a json file.
+            //Note 2: %QUERY gets replaced with what the user puts in the text box at runtime
+            var tvShows = new Bloodhound({
+                //Look at the tv show name property of tvShows
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('tvShowName'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                //Prefetch provides data and additional requests from server
+                //prefetch: '../data/films/post_1960.json',
+                remote: {
+                    //url: '../data/films/queries/%QUERY.json',
+                    url: '/api/tvshows?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            //Here is a refernce to our textbox, giving the 'id' of the input text box
+            //minLength - this is the minimum length a user needs to type before querying the server
+            //highlight - highlights the matching characters
+            $('#tvShow').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+                //name - is the 'tvShows' model
+                //display - what property we should display in the suggestion list
+                //source - is the source of our bloodhound object declared by 'var' above
+                name: 'tvShows',
+                display: 'tvShowName',
+                source: tvShows
+                //e is the event
+                //'tvShow' is the selected tv show
+            }).on("typeahead:select", function (e, tvShow) {
+                //Append the tv show from the element with the id 'tvShows', and add the name of the movie
+                $("#tvShows").append("<li class='list-group-item'>" + tvShow.tvShowName + "</li>");
+
+                //Get the movie element and specify the property we wanto to update
+                $("#tvShow").typeahead("val", "");
+
+                vm.showIds.push(tvShow.id);
+            });
+
+            /*
+             * Display the data in a table.
+             * 
+             */
+            var table = $("#member-watchlist-table").DataTable({
+                ajax: {
+                    url: "/api/watchlists/" + "@Model.MemberId",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "member.id"
+                        //defaultContent: "tvShowName"
+                    },
+                    {
+                        //data: "seasonNumber"
+                        data: "id"
+                        //defaultContent: "tvShowName"
+                    },
+                    {
+                        data: "tvShow.tvShowName"
+                        //defaultContent: "tvShowName"
+                    },
+                    {
+                        data: "tvShow.seasonNumber"
+                        //defaultContent: "tvShowName"
+                    },
+                    {
+                        data: "viewingList"
+                        //defaultContent: "tvShowName"
+                    }
+                ]
+            });
+        });
+    </script>
+
+
+}

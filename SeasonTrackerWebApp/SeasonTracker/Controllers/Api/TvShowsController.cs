@@ -23,33 +23,56 @@ namespace SeasonTracker.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
+        // GET /api/tvshows
+        // OR
+        // GET /api/tvshows?id=5
+        public IEnumerable<TvShowDto> GetTvShows(string query = null)
+        {
+            //We're applying this query to get the TvShows, after selecting all rows. We don't need
+            //to include any related data.
+            var tvShowsQuery = _context.TvShows.AsQueryable();
+
+            //If our query has a value, then filter the available tv shows where the name matches the query
+            if (!String.IsNullOrWhiteSpace(query))
+                tvShowsQuery = tvShowsQuery.Where(t => t.TvShowName.Contains(query));
+
+            return tvShowsQuery
+                .ToList()
+                .Select(Mapper.Map<TvShow, TvShowDto>);
+        }
+
+        //DO NOT DELETE - NEEDED TO COMMENT OUT BECAUSE POSTMAN SAID I HAD TOO MANY GET TVSHOWS ACTIONS
         //We want to return a list of tv shows.
         //This is the convention built into ASP.NET Web API:
         // GET /api/tvshows
-        public IHttpActionResult GetTvShows()
-        {
-            var tvShowDtos = _context.TvShows
-                .ToList()
-                .Select(Mapper.Map<TvShow, TvShowDto>);
+        //public IHttpActionResult GetTvShows()
+        //{
+        //    var tvShowDtos = _context.TvShows
+        //        .ToList()
+        //        .Select(Mapper.Map<TvShow, TvShowDto>);
 
-            return Ok(tvShowDtos);
-        }
+        //    return Ok(tvShowDtos);
+        //}
 
+
+
+
+        //DO NOT DELETE - NEEDED TO COMMENT OUT BECAUSE POSTMAN SAID I HAD TOO MANY GET TVSHOWS ACTIONS
         //We want to return a single tv show.
         //This will respond to a request like this:
         // GET /api/tvshows/1
-        public IHttpActionResult GetTvShow(int id)
-        {
-            //get the tv show
-            var tvShow = _context.TvShows.SingleOrDefault(c => c.Id == id);
+        //public IHttpActionResult GetTvShow(int id)
+        //{
+        //    //get the tv show
+        //    var tvShow = _context.TvShows.SingleOrDefault(c => c.Id == id);
 
-            //if the tvShow is not found
-            if (tvShow == null)
-                return NotFound();
+        //    //if the tvShow is not found
+        //    if (tvShow == null)
+        //        return NotFound();
 
-            //otherwise return the member
-            return Ok(Mapper.Map<TvShow, TvShowDto>(tvShow));
-        }
+        //    //otherwise return the member
+        //    return Ok(Mapper.Map<TvShow, TvShowDto>(tvShow));
+        //}
 
         //To create a tv show, post a tv show to tv shows collection:
         // POST /api/tvshows

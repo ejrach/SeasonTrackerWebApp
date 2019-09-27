@@ -66,10 +66,22 @@ namespace SeasonTracker.Controllers
             var viewModel = new WatchListViewModel
             {
                 //TBD - LEFT off here
-                Id = id
+                MemberId = id
                 //Member = member,
                 //TvShows = .TvShows.ToList(),
                 //WatchLists = member.WatchLists.ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        //Passing id as a parameter, represents the Member Id.
+        //In this action we are consolidating the watchlists into a view per individual member
+        public ActionResult Dashboard(int id)
+        {
+            var viewModel = new WatchListViewModel
+            {
+                MemberId = id
             };
 
             return View(viewModel);
@@ -85,9 +97,6 @@ namespace SeasonTracker.Controllers
                 .Include(w => w.Member)
                 .Include(w => w.TvShow)
                 .SingleOrDefault(c => c.Id == id);
-
-
-
 
             if (watchList == null)
                 return HttpNotFound();

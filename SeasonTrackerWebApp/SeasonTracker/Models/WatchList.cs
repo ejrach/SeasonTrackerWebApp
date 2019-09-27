@@ -10,8 +10,10 @@ namespace SeasonTracker.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public Member Member { get; set; }
 
+        [Required]
         public TvShow TvShow { get; set; }
 
         [Display(Name = "Episode Viewing List")]

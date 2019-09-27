@@ -5,14 +5,11 @@
 }
 
 @*Display the member name and the TV Shows they are subscribed to*@
-<h2>Watchlist for member: @Model.Id</h2>
+<h2>Watchlist for member: @Model.MemberId</h2>
 <p>
-    @Html.ActionLink("Add", "Add", "WatchLists", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add", "Add", "WatchLists", new { id = Model.MemberId }, new { @class = "btn btn-primary" })
 </p>
-@*@if (!Model.WatchLists.Any())
-    {
-        <p>Member is not tracking any shows.</p>
-    }*@
+
 <table id="member-watchlist-table" class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -33,7 +30,7 @@
         $(document).ready(function () {
             var table = $("#member-watchlist-table").DataTable({
                 ajax: {
-                    url: "/api/watchlists/" + "@Model.Id",
+                    url: "/api/watchlists/" + "@Model.MemberId",
                     dataSrc: ""
                 },
                 columns: [

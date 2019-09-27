@@ -14,7 +14,7 @@ namespace SeasonTracker.ViewModels
     // corresponding watchlists
     public class WatchListViewModel
     {
-        public int Id { get; set; }
+        public int MemberId { get; set; }
 
         //public string MemberName { get; set; }
         //public int MemberId { get; set; }
